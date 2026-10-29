@@ -33,6 +33,11 @@ print(f"Screening: {len(kept)} retained, {len(dropped)} excluded "
 print(f"  retained marked uncertain (co-equal subject): {sum(r['uncertain'] == 'True' for r in kept)}")
 print(f"  retained by arXiv year: {sorted(collections.Counter(year(r['arxiv']) for r in kept).items())}")
 print(f"  roles: {dict(collections.Counter(r['role'] for r in kept))}")
+titles = {r["arxiv"]: r["title"] for r in records}
+concept = [r["arxiv"] for r in kept if r["role"] == "SURVEY" and r["in_corpus"] != "True"
+           and "sycophan" in titles[r["arxiv"]].lower()]
+print(f"  SURVEY-role papers outside the submitted corpus whose titles name sycophancy: "
+      f"{len(concept)} {concept}")
 
 recall = load("recall_check.csv")
 hit = [r for r in recall if r["returned_by_query"] == "True"]

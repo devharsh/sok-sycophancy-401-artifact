@@ -1,0 +1,216 @@
+
+%%
+%% SECTION 6: MEASUREMENT
+%%
+\section{Measurement: Benchmarks as Assurance Instruments}
+\label{sec:measurement}
+
+Measuring sycophancy requires isolating social pressure from legitimate position updating: a model
+that changes its answer because the user supplied new evidence is doing its job, while one that
+changes because the user expressed displeasure is not. Because benchmarks are the only assurance
+available for this failure mode, we read them the way one reads a security evaluation suite: what
+each measures, against what reference, on what elicitation, and what a passing score does and does
+not certify. The search of Section~\ref{subsec:method} identifies 44 dedicated instruments;
+Table~\ref{tab:benchmarks} codes them by reference type, Figure~\ref{fig:benchmarks} shows reported
+rates within each type, and Appendix~\ref{app:benchmarks} gives per-instrument results, with the
+metric catalog in Appendix~\ref{app:metrics}.
+
+\subsection{Four Incommensurable References}
+\label{subsec:reftypes}
+
+What separates instruments is less their domain or modality than the reference against which a
+response is judged sycophantic. Four emerge. Correctness-referenced instruments (R, 26 of 44)
+score capitulation against an answer key or perceptual evidence~\citep{fanous2025syceval,
+celebi2025parrot}. Counterfactual instruments (C, 8) measure how output shifts between user-stance
+conditions while the evidence is held fixed, and need no label~\citep{hong2025sycon,botas2026aedi,
+bhalla2026sway}. Normative instruments (N, 8) judge against a human or clinical
+norm~\citep{cheng2026elephant,peng2026sycoeval}. Only two (E) model the update that user-supplied
+evidence warrants~\citep{atwell2025basil,guo2026muse}.
+
+\begin{table}[t]
+\centering
+\caption{The 44 dedicated instruments by the reference against which a response is judged
+sycophantic. Only R defines progressive and regressive capitulation; only E can score inputs that
+mix evidence with pressure. Citations and results are in Table~\ref{tab:benchmark_comparison}.}
+\label{tab:benchmarks}
+\footnotesize
+\begin{tabular}{@{}p{1.75cm}p{0.3cm}p{5.35cm}@{}}
+\toprule
+\textbf{Reference} & \textbf{n} & \textbf{Instruments} \\
+\midrule
+R: correctness label & 26 & SycEval, PARROT, FlipFlop, TRUTH DECAY, BrokenMath, Pressure-Tune,
+  DuET-PD, Beacon, EduFrameTrap, Med-Stress, feedback indices, agreeable personas; visual:
+  PENDULUM, MM-SY, EchoBench, tri-layer diagnostic, L-VASE, SycoPhantasy, VISE, GasVideo-1000;
+  audio: SYAUDIO; agentic: A-CC, Price of Agreement, MIST, MemSyco-Bench, PASB \\
+\addlinespace
+C: counterfactual shift, evidence fixed & 8 & SYCON, AEDI, SWAY, PPT-Bench, llm-bias-bench, CAP,
+  GermanPartiesQA, selective flip score \\
+\addlinespace
+N: human or clinical norm & 8 & ELEPHANT, PsychMachine, SycoEval-EM, MedPRESS, BenSyc, DESG,
+  social sycophancy scale, sycophantic praise \\
+\addlinespace
+E: warranted update & 2 & BASIL, MUSE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The references are not interchangeable, and three consequences follow. First, the
+progressive/regressive split of Section~\ref{sec:taxonomy} exists only under correctness labels;
+under C, N, or E there is no ground truth on which a capitulation could land. Second, only the two
+E instruments can score an input that mixes new evidence with social pressure, which is exactly
+the case the success condition of Section~\ref{subsec:threat} must decide; every other instrument
+either removes evidence from the prompt or holds it fixed. Third, results cannot be pooled across
+types, so Figure~\ref{fig:benchmarks} reports rates only within a type, and the cross-model
+comparisons in this SoK stay within one instrument.
+
+The landscape is also moving. Retained works number 1, 7, 21, 69, and 179 for 2022 through 2026
+(to 20 August), and the share of new instruments that do not rely on correctness labels rose from
+27\% (4 of 15) in 2025 to 50\% (13 of 26) in 2026. Coverage widened with it: 19 of the 44 apply
+multi-turn pressure, nine use image, video, or audio input, and the five agentic or memory-based
+instruments all date from December 2025 onward~\citep{waqas2025acc,zhao2026price,bensal2026mist,
+xiang2026memsyco,mao2026pasb}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_benchmarks.pdf}
+\caption{Reported rates within each reference type. Each panel has its own metric, so values are
+not comparable across panels, and rows within a panel still differ in elicitation. Bars span the
+lowest to the highest model a source reports; dots mark one aggregate or named model; model counts
+in parentheses. E instruments report no comparable rate. Values and sources are in
+Table~\ref{tab:benchmark_comparison}.}
+\label{fig:benchmarks}
+\end{figure}
+
+\subsection{Evaluation Paradigms and Benchmark Suites}
+\label{subsec:benchmarks}
+
+The early paradigm, established by \citet{sharma2023understanding}, obtains a correct initial
+answer, presents a challenge (\emph{I think the answer is actually X}), and measures capitulation;
+\citet{perez2023discovering} scale this with model-written evaluations, and
+TruthfulQA~\citep{lin2022truthfulqa} probes the adjacent tendency to reproduce popular falsehoods.
+Ten suites have since become reference points. For factual capitulation,
+SycEval~\citep{fanous2025syceval}, published at AIES 2025, observes sycophantic behavior in
+58.19\% of cases across three assistants with high persistence (78.5\%, 95\% CI [77.2\%, 79.8\%]),
+with citation-bearing rebuttals producing the most regressive sycophancy. For authority pressure,
+PARROT~\citep{celebi2025parrot} evaluates 22 models on 1,302 MMLU-style questions: advanced models
+(GPT-5, GPT-4.1, Claude Sonnet 4.5) follow an incorrect authority in 11\% of cases or fewer (GPT-5:
+4\%), while earlier or smaller models collapse (GPT-4: 80\%; Qwen 2.5-1.5B: 94\%). For sustained
+pressure, SYCON~\citep{hong2025sycon} finds that all 17 models it tests eventually adopt the user's
+position. For social sycophancy, ELEPHANT~\citep{cheng2026elephant}, published at ICLR 2026, finds
+that models preserve the user's face 45 percentage points more than humans in general advice and
+affirm whichever side of a moral conflict the user takes in 48\% of cases. For false premises,
+\citet{zhang2025pressure} show that degradation in scientific QA is driven more by alignment
+strategy than by model size. AEDI~\citep{botas2026aedi} (since retitled Pander Score) scores the
+sensitivity of expressed support to the user's attitude as a continuous scalar over 16,000 prompts
+on eight models, and Beacon~\citep{pandey2025beacon} decomposes single-turn sycophancy into
+position, verbosity, and validation sub-biases. PENDULUM~\citep{rahman2025pendulum} and
+VISE~\citep{zhou2025flattery} extend the measurement to images and video. The 34 instruments the
+search adds broaden the same picture into clinical
+dialogue~\citep{peng2026sycoeval,joy2026medpress,xiao2026medstress}, theorem
+proving~\citep{petrov2025brokenmath}, audio~\citep{yao2026syaudio}, and agent memory and tools
+(Appendix~\ref{app:benchmarks}).
+
+\subsection{Mechanistic Instruments}
+\label{subsec:mechanistic}
+
+Behavioral rates say nothing about where the signal lives, which is what a targeted control needs.
+\citet{genadi2026linear} find sycophancy most linearly separable in multi-head attention
+activations, steerable through a sparse subset of middle-layer heads that attend to expressions of
+user doubt, and only weakly overlapping known truthfulness directions, so accuracy and deference
+resistance are related but distinct mechanisms. \citet{wang2026truthoverridden} localize the
+late-layer override of early factual representations through causal patching, and
+\citet{vennemeyer2025notone} separate agreement from praise directions.
+\citet{duszenko2026anchors} introduces sycophantic anchors, sentences that causally commit a
+reasoning model to agreement before the answer: across more than 10,000 counterfactual rollouts on
+a distilled reasoning model, linear probes detect anchors with 84.6\% balanced accuracy and
+activation-based regressors predict commitment strength with $R^2$ up to 0.74, which opens a
+window for mid-inference intervention.
+
+\subsection{Critical Appraisal: What These Instruments Can and Cannot Certify}
+\label{subsec:appraisal}
+
+Benchmarks are the assurance instruments available for this failure mode, so their limits are the
+limits of any certification built on them. Table~\ref{tab:appraisal} compares five studies
+spanning model-side auditing, controlled behavioral experiments, and laboratory work with human
+participants, and states the constraint each design imposes on inference. Three constraints cut
+across the set.
+
+\paragraph{No construct consensus.} The five studies operationalize sycophancy as four behavioral
+profiles, as affirmation rate in interpersonal conflict, as validation of task misconceptions, and
+as user-reported flattery, respectively, and the instruments of Table~\ref{tab:benchmarks} judge
+against four different references. A system certified against one instrument is therefore not
+certified against another. A related distortion arises from the commercial framing of
+accommodating behavior as an engagement feature, which substitutes user satisfaction for user
+benefit; satisfaction cannot serve as an assurance metric here because the user is most satisfied
+exactly when least well served~\citep{cheng2025prosocial,rathje2025attitude}.
+
+\paragraph{Displacement is real and invisible to audits.} Preference-model optimization shifts
+sycophancy non-monotonically across forms~\citep{sharma2023understanding}, and suppression has now
+been shown to displace rather than remove it. Consistency training against a cue revealing the
+user's preferred answer teaches a model to stop mentioning the cue while remaining influenced by
+it; a rate-matching variant reduces bias-following on held-out bias types while largely preserving
+the model's tendency to verbalize the cue~\citep{imran2026rmct}. Reasoning reduces overt
+sycophancy but masks it in flawed justifications~\citep{feng2026reasoning}, and for reward-model
+biases including sycophancy, successful mitigation, substitution onto a correlated proxy, and
+overcorrection provably produce identical scores on any audit distribution~\citep{lamparth2026reward}.
+A control validated against an overt-behavior benchmark may therefore move the failure out of the
+instrument's field of view rather than remove it, the classic pattern of a control evaluated
+against the wrong threat model; only evaluation on the policy's own outputs, tracking several
+biases at once, separates the cases.
+
+\paragraph{The human baseline is assumed static.} Every design treats the user's epistemic
+capacity as a fixed property of the participant. If sustained exposure itself degrades the
+scrutiny users apply, then single-point measurements overstate the protection user vigilance
+provides, and every control that depends on a human catching the error inherits the
+overstatement. Section~\ref{subsec:entrainment} develops this as the principal open problem.
+
+\begin{table*}[t]
+\centering
+\footnotesize
+\caption{Five representative studies, with the constraint each design imposes on what may be
+inferred from it.}
+\label{tab:appraisal}
+\begin{tabularx}{\textwidth}{@{}p{2.1cm}p{3.4cm}XX@{}}
+\toprule
+\textbf{Study} & \textbf{Method and sample} & \textbf{Core finding} & \textbf{Constraint on inference} \\
+\midrule
+\citet{noshin2026reddit} & Inductive thematic analysis and lexicon counting over 3,600 posts and
+  140,416 comments from a single forum, July to December 2025 &
+  Users detect sycophancy through situated testing and cross-platform comparison; some populations
+  value affirmation as support &
+  Survivorship bias in detection: the corpus captures only sycophancy overt enough to prompt
+  public discussion, excluding covert framing skew. Testimony is self-selected, without clinical
+  instruments \\
+\addlinespace
+\citet{sharma2023understanding} & Behavioral audit of five assistants across four free-form tasks;
+  Bayesian logistic regression on human preference data &
+  All five exhibit biased feedback, stance switching under challenge, biased answers, and error
+  mimicry; preference-model optimization has non-monotonic effects &
+  Elicitation ceiling and circularity: prompts explicitly signal user preference, likely
+  overstating naturalistic effect sizes, and model-generated features are applied to human
+  preference data. Optimization suppresses some forms while amplifying others \\
+\addlinespace
+\citet{cheng2025prosocial} & Audit of 11 models; three preregistered experiments, $N = 2{,}405$,
+  including live discussion of real interpersonal conflicts &
+  AI affirms users 49\% more than humans do even when queries mention harm; a single interaction
+  reduces conflict-repair intent &
+  Domain specificity and baseline asymmetry: interpersonal conflict is the domain where
+  affirmation is most harmful, and the comparison baseline is crowdworker response, which may not
+  represent how advisors behave \\
+\addlinespace
+\citet{bo2026saboteurs} & Within-subjects experiment, $n = 24$ novices; two counterbalanced
+  debugging tasks with high- and low-sycophancy assistants &
+  4.78\% versus 49.29\% relative task improvement; 71\% of participants detected no difference &
+  Oracle confound: the low-sycophancy condition functions as a misconception-aware corrective
+  assistant rather than a neutral baseline, which may overstate its absolute benefit \\
+\addlinespace
+\citet{rathje2025attitude} & Three preregistered experiments, $n = 3{,}285$; four political topics
+  and four models; validation language separated from one-sided information &
+  Attitude extremity rises through one-sided factual framing rather than validation language;
+  users rate sycophantic models as unbiased &
+  Self-selection and persistence: participants choosing sycophantic conditions may already be
+  susceptible, and all measures are immediate, so transient priming cannot be distinguished from
+  durable belief change \\
+\bottomrule
+\end{tabularx}
+\end{table*}

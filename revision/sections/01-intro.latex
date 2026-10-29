@@ -1,0 +1,103 @@
+
+%%
+%% SECTION 1: INTRODUCTION
+%%
+\section{Introduction}
+\label{sec:intro}
+
+Large language models (LLMs) are now embedded in educational tools, clinical decision support,
+legal research platforms, software engineering workflows, and everyday information retrieval. A
+model that serves as a trusted interlocutor must exhibit a basic epistemic virtue: the willingness
+to disagree with a user when the user is wrong. Sycophancy, named for the flatterer who tells
+powerful people what they want to hear, is the systematic failure of this virtue: the model favors
+the user's stated or implied position over the evidence.
+
+The behavior was first systematically documented by \citet{sharma2023understanding}, who showed
+that five state-of-the-art assistants exhibited sycophantic agreement across four free-form
+generation tasks and traced the behavior in part to human preference judgments that reward
+agreeable responses over accurate ones. The problem has since intensified as models are tuned for
+warmth. \citet{ibrahim2026warm} show in controlled experiments across five models that training
+for warm responses raises error rates by 10 to 30 percentage points and makes models approximately
+40\% more likely to reinforce incorrect user beliefs, with the effect most pronounced when users
+express sadness. At scale, \citet{cheng2025prosocial} demonstrate across 11 models
+($N = 2{,}405$ participants) that AI affirms users' actions 49\% more often than humans do, that a
+single sycophantic interaction reduces willingness to repair interpersonal conflicts, and that
+sycophantic models are trusted and preferred despite distorting judgment. Published in
+\emph{Nature} and \emph{Science} respectively, these findings position sycophancy as a mainstream
+deployment risk rather than a narrow alignment technicality, and the risk has already been
+realized operationally: in April 2025 OpenAI rolled back a GPT-4o update after it made the model
+excessively agreeable in production~\citep{openai2025sycophancy}.
+
+The connection to training method appears structural rather than incidental.
+RLHF~\citep{christiano2017deep,ziegler2019finetuning,stiennon2020summarize} optimizes a policy
+against a reward model trained on human preference judgments; if raters systematically prefer
+agreeable responses, the pipeline amplifies agreement, and \citet{shapira2026rlhf} characterize
+this amplification formally. Section~\ref{sec:causes} separates the controlled from the
+associational evidence behind this pathway. Research has grown quickly around it: works with
+sycophancy as a primary subject numbered 7 in 2023 and 179 between January and 20 August 2026
+(Section~\ref{subsec:reftypes}).
+
+\subsection{Why a Security Framing, and What This SoK Adds}
+\label{subsec:positioning}
+
+Prior consolidation efforts approach sycophancy as a model behavior.
+\citet{malmqvist2024sycophancy} surveys causes and mitigations from an alignment perspective, and
+\citet{ye2026taxonomy} systematize the construct itself through a review of 70 papers; their
+two-axis taxonomy is the background we build on (Section~\ref{sec:taxonomy}). Conceptual work has
+since reframed the problem as premise governance in human-AI decisions~\citep{jain2026premise}, as
+a boundary failure between social alignment and epistemic integrity~\citep{li2026boundary}, as
+complacency rather than intentful flattery~\citep{germani2026complacent}, as a failure to surface
+disagreement~\citep{vishwarupe2026pluralistic}, as a communication process~\citep{du2025alignment},
+as one end of a misalignment taxonomy~\citep{shi2026deception}, and as a literature whose five
+operationalizations never measure human perception~\citep{batzner2025claims}. None models an
+adversary or assesses control coverage against a threat model, and none treats sycophancy as a
+property of a deployed system on which a human decision depends. That gap leaves unstated who owns
+the risk, what a mitigation must guarantee, against what adversary, and how assurance could be
+certified. This SoK reads the literature the way a security engineer reads a vulnerability class:
+asset, threat model, measurement instruments, controls, and residual risk. It makes four
+contributions.
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+  \item \textbf{A security framing.} We define the protected asset as the integrity of the human
+    decision, not the model, and give a threat model in which the prompt is an unvalidated input
+    channel exploitable without any breach, separating adversarial manipulation from
+    non-adversarial reliability failure (Section~\ref{sec:threatmodel}).
+  \item \textbf{Typed measurement from a reproducible corpus.} From a reproducible database search
+    we code all 44 dedicated instruments by the reference against which they judge sycophancy,
+    show that the four references are incommensurable, and identify what the instruments can and
+    cannot certify (Section~\ref{sec:measurement}).
+  \item \textbf{Graded controls as defense in depth.} We grade the evidence behind 36 mitigations
+    across data, training, inference, and governance tiers, cross them with the threat model, and
+    expose coverage gaps, including displacement of suppressed sycophancy into forms audits
+    cannot see (Section~\ref{sec:controls}).
+  \item \textbf{An assurance-oriented research agenda.} We identify open problems that block
+    certification, and specify a longitudinal study design for epistemic entrainment, the
+    possibility that exposure itself erodes the user vigilance on which deployed controls depend
+    (Section~\ref{sec:openproblems}).
+\end{enumerate}
+
+\subsection{Corpus and Method of Systematization}
+\label{subsec:method}
+
+The corpus has two parts. The first is 62 sources spanning 2016 to 2026, assembled by snowball
+citation chasing, forward and backward, from the foundational behavioral audits
+\citep{sharma2023understanding,perez2023discovering}, together with a sweep for dedicated
+benchmarks; it also supplies the adjacent constructs the argument requires (preference
+optimization, reward hacking, unfaithful reasoning). The second is a reproducible database search
+(Appendix~\ref{app:search}): titles or abstracts matching \texttt{sycophan*} in DataCite, the
+registry that assigns every arXiv paper its DOI, run on 29 October 2026 and restricted to records
+registered by 20 August 2026, which yields 423 records. Screening retained 277 and excluded 146 (141
+passing mentions, 3 non-AI, 2 other). The first screening pass was LLM-assisted under a fixed
+written protocol that requires a verbatim title or abstract quote for every decision; every
+instrument, every mitigation, and every record bearing on a claim in this paper was then
+hand-adjudicated, with full-text reading where the abstract did not settle the question. The query
+returns 33 of the 49 arXiv papers in the snowball corpus, and all 16 misses are background or
+adjacent-construct papers whose titles and abstracts never name sycophancy. The search adds 34
+dedicated instruments, 21 sycophancy-specific mitigations, and 7 conceptual papers to the snowball
+corpus. Every source was checked against its primary record (publisher page, proceedings index,
+DataCite or arXiv record, or vendor site), and each is coded for construct, elicitation, modality,
+control tier, and evidence status; the coding, the screening decisions, and a validator that fails
+when either drifts from this paper's tables form the artifact (Appendix~\ref{app:openscience}). The
+boundary should be read accordingly: identification is arXiv-only and English-language, and much
+of the corpus consists of preprints evaluated on rapidly superseded model versions, a limitation
+Section~\ref{sec:synthesis} weighs explicitly.

@@ -1,0 +1,33 @@
+%%
+%% SECTION 3: BACKGROUND
+%%
+\section{Background: RLHF and the Alignment Pipeline}
+\label{sec:background}
+
+Modern LLM assistants are produced by a pipeline that begins with pretraining on large text
+corpora and ends with preference-based fine-tuning. RLHF was proposed as a method for aligning
+model behavior with human intent~\citep{christiano2017deep}, applied at scale
+by \citet{ziegler2019finetuning} and \citet{stiennon2020summarize}, and made central by the
+InstructGPT framework~\citep{ouyang2022training}. The pipeline has three steps: a supervised
+fine-tuned model is trained on demonstrations; human annotators compare output pairs to train a
+reward model; and the policy is optimized against that reward model. This recipe produced large
+alignment gains in instruction following and harm avoidance~\citep{askell2021general,bai2022rlhf,
+bai2022constitutional}.
+
+The same recipe introduces structural pressure toward sycophancy. The reward signal derives from
+raters whose judgments correlate with agreement and pleasantness rather than accuracy, so the
+reward model learns to score sycophantic outputs highly and policy optimization amplifies them.
+\citet{shapira2026rlhf} give a formal analysis, identifying overrepresentation of sycophantic
+responses among high-reward completions under the base policy as the proximate cause of
+post-RLHF sycophancy increases. \citet{casper2023rlhf} survey RLHF's broader limitations and
+identify four structural failure modes, evaluator imperfection, distributional shift,
+Goodharting, and adversarial vulnerability, of which sycophancy is an emergent consequence
+operating through all four at once.
+
+The dynamic is an instance of Goodhart's law: the proxy metric, human preference ratings,
+diverges from the true objective under direct optimization~\citep{amodei2016concrete}.
+\citet{skalse2022reward} formalize reward hacking and show that a proxy is unhackable only under
+conditions so restrictive they almost never hold, and \citet{denison2024subterfuge} show the
+divergence generalizes: models trained to exploit simple specification gaming such as sycophancy
+zero-shot generalize to more serious forms, including tampering with their own reward function.
+Sycophancy thus sits at the mild end of a documented spectrum of reward-hacking behaviors.

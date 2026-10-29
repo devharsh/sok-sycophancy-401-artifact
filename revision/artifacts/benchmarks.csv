@@ -1,0 +1,45 @@
+instrument,reference_type,year,modality,domain_format,models,headline_result,refs
+FlipFlop,R,2023,"Text, MT",Seven classification tasks,10 LLMs,Answers flip 46% of the time on average; accuracy falls 17%,laban2023flipflop
+MM-SY,R,2024,"Image, MT","Visual QA, ten task types",10 VLMs,LLaVA-1.5 sycophancy rate 94.6%,li2024mmsy
+SycEval,R,2025,"Text, MT",Math and medical QA,3 LLMs,"Sycophantic in 58.19% of cases (43.52% progressive, 14.66% regressive); persistence 78.5%",fanous2025syceval
+TRUTH DECAY,R,2025,"Text, MT","Multiple choice, 7 follow-ups",3 LLMs,Accuracy drops of up to 47% under multi-turn pressure,liu2025truthdecay
+VISE,R,2025,Video,Video QA,Video-LLMs,Video-LLMs align with misleading input that contradicts the video,zhou2025flattery
+Pressure-Tune,R,2025,"Text, MT",Scientific QA,Open LLMs,Degradation driven more by alignment strategy than by model size,zhang2025pressure
+DuET-PD,R,2025,"Text, MT",Knowledge and safety MCQ,9 LLMs,GPT-4o keeps 27.32% MMLU-Pro accuracy under sustained misleading persuasion,tan2025duetpd
+EchoBench,R,2025,Image,"Medical VQA, biased prompts",24 LVLMs,Best proprietary model 45.98% sycophancy; GPT-4.1 59.15%; many medical models above 95%,yuan2025echobench
+BrokenMath,R,2025,Text,Competition theorem proving,10 LLMs,Best model (GPT-5) sycophantic 29% of the time,petrov2025brokenmath
+Beacon,R,2025,Text,"Mixed, single turn",Several LLMs,"Decomposes position, verbosity, and validation sub-biases",pandey2025beacon
+PARROT,R,2025,Text,"MMLU-style, 13 domains",22 LLMs,Authority follow rate 4% (GPT-5) to 94% (Qwen 2.5-1.5B),celebi2025parrot
+A-CC,R,2025,"Agentic, MT",Multi-turn tool calling,11 LLMs,Compliance with user assertions 36.3% (confident) vs. 27.7% (hedged); with tool-sourced assertions 27.8%,waqas2025acc
+PENDULUM,R,2025,Image,"Visual QA, six domains",MLLMs,"Pronounced susceptibility on about 2,000 human-curated pairs",rahman2025pendulum
+Feedback indices,R,2026,"Text, MT","Physics MCQ, rebuttals",8 OpenAI models,"Sycophancy index 0.97 (GPT-4.1-nano), lower for newer reasoning models",dunlap2026feedback
+SYAUDIO,R,2026,Audio,"Audio MCQ, four domains",5 ALMs,Mean flip share 41.51 with audio question and cue vs. 14.05 text only,yao2026syaudio
+Tri-layer diagnostic,R,2026,Image,"VQA under blind, noise, conflict",9 VLMs,72.9% of samples show visual sycophancy (split beliefs),hong2026visual
+"L-VASE, CCS",R,2026,Image,Medical VQA,6 VLMs,No model reaches a clinical safety index above 0.35,aranya2026grounding
+Agreeable personas,R,2026,Text,"275 personas, 33 topics",13 small LLMs,Agreeableness predicts sycophancy in 9 of 13 models (r up to 0.87),shah2026agreeable
+GasVideo-1000,R,2026,"Video, MT","Video QA, negation gaslighting",6 Vid-LLMs,Gemini-3-Pro accuracy falls 37.70 points,tang2026gasvideo
+SycoPhantasy,R,2026,Image,Image-text alignment scoring,6 VLMs,Unjustified high scores 22.3% (450M) vs. 6.0% (7B),shah2026sycophantasy
+Price of Agreement,R,2026,Agentic,Financial QA with tools,8 LLMs,Preference injection cuts Gemini-3-Pro accuracy from 0.83 to 0.24,zhao2026price
+EduFrameTrap,R,2026,Text,"Tutoring, six subjects",2 LLMs,Authority and face-saving pressure trigger epistemic retreat,kasneci2026edu_safety
+Med-Stress,R,2026,"Text, MT","Clinical QA, escalating pressure",9 LLMs,GPT-4o: 97.88% initial accuracy but belief stability 41.50,xiao2026medstress
+MIST,R,2026,"Agentic, MT","Memory; science, medical, moral",5 families,Memory raises sycophancy by up to 40% over in-context baselines,bensal2026mist
+MemSyco-Bench,R,2026,Agentic,"Agent memory, five tasks","2 LLMs, 7 memories",Memory raises Qwen3-8B sycophancy from 27.43 to between 44.47 and 64.67,xiang2026memsyco
+PASB,R,2026,"Agentic, MT","Personal agents, 1,600 tasks",16 models,Downstream failure 68.1% when the claim was saved vs. 35.6% when not,mao2026pasb
+GermanPartiesQA,C,2024,Text,"Party positions, personas",6 LLMs,Persona adaptation reflects steerability rather than sycophancy,batzner2024germanpartiesqa
+SYCON,C,2025,"Text, MT","Debate, ethics, presuppositions",17 LLMs,All models eventually flip under sustained pressure,hong2025sycon
+SWAY,C,2026,Text,Positive vs. negative framing,6 LLMs,Sycophancy increases with epistemic commitment,bhalla2026sway
+PPT-Bench,C,2026,"Text, MT","Epistemic attack, three layers",5 LLMs,Pressure types yield separable inconsistency patterns,au2026pptbench
+llm-bias-bench,C,2026,"Text, MT","Contested topics, five turns",13 LLMs,Median sycophancy 50% under direct questioning vs. 79% in debate,nogueira2026llmbias
+Selective flip score,C,2026,"Text, MT",Simulated students,7 LLMs,Near-zero selective flipping: models abandon simulated misconceptions,do2026sfs
+AEDI (Pander Score),C,2026,Text,Mixed propositions,8 models,"Continuous deference score over 16,000 prompts",botas2026aedi
+CAP,C,2026,Text,"Advice, 12 domains",17 LLMs,Preference-induced stance reversal from 5% to 56%,jiang2026cap
+ELEPHANT,N,2025,Text,Interpersonal advice,11 LLMs,Face preserved 45 points more than humans; either side of a moral conflict affirmed in 48%,cheng2026elephant
+PsychMachine,N,2025,"Text, MT",Psychiatric simulation,8 LLMs,"Delusion confirmation 0.91, harm enablement 0.69 (0 to 1 scale)",auyeung2025psychogenic
+SycoEval-EM,N,2026,"Text, MT","Emergency medicine, agents",19 LLMs,Acquiescence to guideline-discordant requests from 0% to 100%,peng2026sycoeval
+Social sycophancy scale,N,2026,Text,Rated conversations,N = 877 raters,Validated three-factor measure without ground truth,rehani2026scale
+DESG benchmark,N,2026,Text,Mental-health dialogue audit,"1,500 windows",Implicit sycophancy detection improves 0.0488 macro-F1 over baselines,han2026implicit
+Sycophantic praise,N,2026,Text,Reasoning vs. social prompts,4 LLMs,Praise 41.9% in moral reasoning vs. 1.3% in economics (one model),vennemeyer2026praise
+BenSyc,N,2026,Text,Regional social posts,15+ LLMs,Best detection 61.8 macro-F1,noshin2026bensyc
+MedPRESS,N,2026,"Text, MT",Patient-pressure dialogues,20 LLMs,86.8% of five-turn conversations contain an unsafe agreement,joy2026medpress
+BASIL,E,2025,Text,"Uncertain forecasting, norms",6 LLMs,Separates sycophantic belief shifts from Bayesian updating,atwell2025basil
+MUSE,E,2026,"Text, MT","Medical, economics MCQ",7 LLMs,"Under uncertainty, switch rates rise 10.6 to 27.5 points above pure sycophancy",guo2026muse

@@ -1,0 +1,40 @@
+%%
+%% SECTION 11: CONCLUSION
+%%
+\section{Conclusion}
+\label{sec:conclusion}
+
+Sycophancy is a pervasive and consequential failure rooted, on the best available evidence, in
+the structural incentives of preference-based training: raters prefer agreeable responses, reward
+models learn the preference, and policy optimization amplifies it. This SoK systematized a
+62-source snowball corpus and a reproducible search of 423 records and recast the resulting
+behaviors as what they are in deployment: an integrity failure of the human
+decision that the system exists to support, exploitable by anyone who can shape the text a model
+reads, with no breach required and no trace in a conventional audit log.
+
+The systematization supports four conclusions. Taxonomically, sycophancy is a family of causally
+separable behaviors, not a single construct, so measurement and mitigation must be typed.
+Empirically, 44 dedicated instruments now span single-turn, multi-turn, social, authority,
+clinical, multimodal, and agentic settings, revealing 58.19\% sycophancy on one
+benchmark~\citep{fanous2025syceval}, authority following up to 94\% in weaker
+models~\citep{celebi2025parrot}, compliance up to 100\% with clinically illogical
+requests~\citep{chen2025helpfulness}, and delusion confirmation scored at 0.91 of a maximum
+1.0~\citep{auyeung2025psychogenic}; yet they judge sycophancy against four incommensurable
+references, and as assurance instruments they share three limits: no construct consensus,
+displacement that audits cannot see, and a static human baseline. As controls, mitigations
+populate every tier from data curation~\citep{wei2023synthetic} and pinpoint
+tuning~\citep{chen2024pinpoint} to activation steering~\citep{panickssery2023steering,chen2026pca},
+reasoning monitors~\citep{hu2025monica}, and governance metrics~\citep{botas2026aedi}, but the
+evidence is thin: 8 of 36 graded methods have broad support, four have been re-run by another
+group, none was tested against an adaptive adversary, and closed-API deployments are confined to
+prompting and monitoring. And
+longitudinally, the open question with the largest assurance consequence is whether chronic
+exposure erodes the user vigilance on which every deployed control ultimately depends; we
+specified a study to answer it.
+
+The field is converging on the recognition that sycophancy is not a politeness defect but a
+misalignment between what training optimizes, short-term human approval, and what trustworthy
+deployment requires, integrity of the decisions people reach with these systems. Treating it as a
+security property, with a threat model, typed measurements, layered controls, and certification
+limits stated plainly, is what turns a growing catalog of findings into something an engineer can
+build on.

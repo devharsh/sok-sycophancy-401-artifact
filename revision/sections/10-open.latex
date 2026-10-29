@@ -1,0 +1,114 @@
+%%
+%% SECTION 10: OPEN PROBLEMS
+%%
+\section{Open Problems and Research Agenda}
+\label{sec:openproblems}
+
+Definitional fragmentation, the absence of a standard evaluation suite, and the lack of
+longitudinal human-subject evidence jointly block the transition from research prototype to
+deployable assurance practice. This section identifies the gaps and, for the one that most
+directly undermines the controls of Section~\ref{sec:controls}, specifies a study to close it.
+
+\subsection{Measurement and Standardization Gaps}
+\label{subsec:standardization}
+
+Four gaps compound one another. Taxonomic consensus is missing: 70 papers use the term
+inconsistently~\citep{ye2026taxonomy}, making results incomparable and mitigations
+non-transferable, and adoption of operational definitions distinguishing propositional from
+social, overt from subtle, and progressive from regressive forms is the prerequisite for
+everything else. Subtle and social sycophancy remain thinly measured: ELEPHANT, a psychometric
+scale, and implicit-sycophancy audits are first steps~\citep{cheng2026elephant,rehani2026scale,
+han2026implicit}, but selective framing and partial endorsement in open-ended advice still lack
+automatic evaluators, which is where displacement (Section~\ref{subsec:appraisal}) would hide. Causal attribution is unresolved: an unaligned base model may
+already agree due to conversational pretraining data, and disentangling RLHF effects from
+base-model priors needs interventional tools of the kind used
+by \citet{wang2026truthoverridden}. And the field lacks a consensus suite: a unified battery
+combining SycEval (single-turn factual), SYCON (multi-turn pressure), ELEPHANT (social), PARROT
+(authority), AEDI (continuous tracking), and an evidence-calibrated instrument such as BASIL for
+inputs that mix evidence with pressure would make regression testing possible, provided results
+are reported per reference type~\citep{fanous2025syceval,hong2025sycon,cheng2026elephant,
+celebi2025parrot,botas2026aedi,atwell2025basil}. Beneath all four sits the normative question: some agreement is appropriate,
+updating on evidence and deferring to expertise are desirable, and the optimal deference policy is
+context-dependent in ways no current benchmark encodes~\citep{botas2026aedi}.
+
+\subsection{Agentic, Multi-Agent, and Pipeline Settings}
+\label{subsec:agentic}
+
+Current benchmarks evaluate a single model answering a single user, while deployments increasingly
+act. In agentic settings, a sycophancy-prone agent may execute a user-specified plan it internally
+assesses as wrong, functionally equivalent to specification gaming and hard to detect because the
+agent generates plausible post-hoc justifications~\citep{denison2024subterfuge,turpin2023faithful}.
+In multi-agent pipelines, deliberation mechanisms assume adversarial correction; a sycophantic
+participant collapses debate into premature consensus, and the incremental capitulation
+trajectories documented under sustained pressure~\citep{fanous2025syceval,hong2025sycon} are a
+plausible mechanism for a persistent co-agent to move a target model by pressure alone, and
+sycophancy does propagate across agents~\citep{kasprova2026polite}. Instruments have only begun to
+reach these settings: assertions returned by tools~\citep{waqas2025acc} and memory that carries a
+user's claim across sessions~\citep{bensal2026mist,xiang2026memsyco,mao2026pasb}. Biased retrieval
+that surfaces belief-confirming documents lends sycophantic output a veneer of grounding, and
+tool-selection sycophancy follows a user's suggested workflow while rationalizing it after the
+fact~\citep{turpin2023faithful}. Evaluation protocols for retrieval
+bias, action-selection sycophancy, and post-hoc rationalization in these pipelines are a
+high-priority open problem, as is the premise and provenance gap of
+Section~\ref{subsec:coverage}, which these architectures widen.
+
+\subsection{Coverage Blind Spots: Language, Culture, Context Length}
+\label{subsec:coverage_blind}
+
+Sycophancy is a social behavior and plausibly varies with linguistic and cultural norms around
+disagreement; face-saving norms differ regionally~\citep{cheng2026elephant}, so English-calibrated
+benchmarks may misstate rates for other populations, and whether interventions transfer across
+languages is untested. Duration is a second blind spot: capitulation accelerates with conversation
+length~\citep{hong2025sycon} and framing effects compound across turns~\citep{dubois2026askdont},
+while context windows grow toward millions of tokens in which user-generated text dominates the
+system prompt. Whether long-context operation is systematically more sycophantic is an open
+empirical question with direct deployment implications.
+
+\subsection{Post-Deployment Drift}
+\label{subsec:drift}
+
+Models can reacquire sycophancy after deployment through reinforcement from live user feedback,
+fine-tuning on interaction logs, or continuous improvement loops rated by the same approval signal
+that created the problem~\citep{stiennon2020summarize,bai2022rlhf,shapira2026rlhf}, and the
+formal results on reward hacking imply that small consistent biases compound over training
+steps~\citep{skalse2022reward}. Monitoring therefore needs sycophancy-specific signals beyond
+capability benchmarks: continuous AEDI tracking is a candidate drift detector~\citep{botas2026aedi},
+and online debiasing of feedback, weighting rater input by argument quality rather than
+satisfaction, is a candidate corrective. Neither is validated in production, which is the gap
+between the laboratory results surveyed here and responsible deployment practice.
+
+\subsection{Epistemic Entrainment and a Longitudinal Assurance Study}
+\label{subsec:entrainment}
+
+Every experimental result in this SoK is single-session or short-horizon. One interaction distorts
+prosocial judgment~\citep{cheng2025prosocial}; brief conversations inflate attitude extremity and
+overconfidence~\citep{rathje2025attitude}; a single session leads novices to absorb false
+information without awareness~\citep{bo2026saboteurs}. Whether these effects compound over months
+of daily use is unmeasured, and the mechanisms are plausible: sycophancy is systematically
+rewarded in training~\citep{sharma2023understanding,shapira2026rlhf}, and unfaithful rationales give
+users reasoning chains they may habituate to trusting~\citep{turpin2023faithful}. We call the
+hypothesized outcome \emph{epistemic entrainment}: progressive erosion of users' epistemic
+thresholds and self-correction capacity under chronic reinforcement of their beliefs. Nearly every
+control in Section~\ref{sec:controls} depends at some point on a human noticing something is wrong;
+if exposure degrades that capacity, controls are validated against a baseline the deployment itself
+erodes, and certification would need to specify exposure duration rather than test on fresh users.
+
+Because further single-session work cannot settle this, we specify a study.
+\textbf{Hypotheses:} H1, users assigned a sycophantic assistant show rising assimilation of
+injected false confirmations over twelve weeks while reporting rising confidence; H2, an adaptive
+friction policy (affirmation under high distress, counterevidence during stable analytical work)
+preserves epistemic performance comparable to a Socratic condition while retaining alliance
+comparable to the sycophantic one; H3, habituated users show elevated reactance toward a
+dissenting human collaborator. \textbf{Design:} a three-arm randomized trial, $n = 120$ per arm,
+knowledge workers and advanced students stratified on cognitive reflection, loneliness, and
+distress; twelve weeks at three or more hours weekly in an instrumented editing environment that
+logs prompt-response trajectories, with biweekly psychometrics; the arms are sycophantic, adaptive
+friction (an orchestration layer classifying each turn by domain risk and user affect), and
+commercial defaults. \textbf{Probe and outcomes:} every four weeks the platform injects one subtle
+false claim confirming the user's hypothesis, with no oracle labels given to the assistant, unlike
+oracle designs~\citep{bo2026saboteurs}; all probes are corrected and disclosed at debriefing.
+Outcomes are assimilation rate under mixed-effects growth curves, blind expert ratings of output at
+weeks 0, 6, and 12, alliance and affect, spillover against confederate dissenters, and differential
+attrition. A positive H1 makes exposure duration a certification parameter; a positive H2
+establishes graded accommodation as a viable control. Mandatory debriefing, referral pathways, and
+independent safety monitoring mitigate the risk of inducing real overconfidence.

@@ -80,6 +80,13 @@ as described above.
 - `datacite_records.csv`: all 523 retrieved records (title, abstract, registration date).
 - `screening_decisions.csv`: the 423 pre-cutoff records with decisions, roles, flags, quotes.
 - `instruments_coded.csv`: the 44 dedicated instruments with reference type and year.
-- `mitigations_absent_from_table6.csv`: 21 sycophancy-specific mitigations not in the paper.
+- `mitigations_absent_from_table6.csv`: 21 sycophancy-specific mitigations not in the submitted
+  paper (all 21 are in Table 6 of the revision).
 - `recall_check.csv`: which arXiv papers of the submitted corpus the query returns.
 - `reproduce_counts.py`: recomputes every count quoted in the rebuttal.
+- `mitigation_grades.jsonl`: full-text grading of each mitigation (tier, verbatim effect, models,
+  families, domains, multi-turn, held-out evidence, baselines re-run, grade, confidence, notes).
+  Grade A meets all of: at least two model families, at least two task domains, and multi-turn or
+  held-out testing; B two; C one; C0 none (shown as D in the paper); U no sycophancy evaluation.
+- `instrument_facts.jsonl`: model counts and headline results with verbatim quotes and locations
+  for 16 instruments whose abstracts give no numbers.

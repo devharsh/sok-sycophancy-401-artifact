@@ -1,0 +1,8 @@
+channel,data_training,inference,monitor_govern,human_oversight,cites_data_training,cites_inference,cites_monitor_govern,cites_oversight
+"single-turn framing (assertion, certainty)",full,full,partial,partial,wei2023synthetic;chen2024pinpoint;li2025causm,dubois2026askdont;panickssery2023steering;genadi2026linear,fanous2025syceval;botas2026aedi,noshin2026reddit
+multi-turn pressure,partial,partial,partial,none,zhang2025pressure;beigi2025smart;tan2025duetpd,hong2025sycon;hu2025monica;shah2026silicon,hong2025sycon,bo2026saboteurs
+"authority, emotion framing",partial,partial,partial,none,ibrahim2026warm;kasneci2026edu_safety,dubois2026askdont;xu2025viper,celebi2025parrot,noshin2026reddit
+"premise, document assertions",none,partial,partial,partial,,ravishankara2025fvarag;liu2026cormrag,waqas2025acc,turpin2023faithful;zhang2025pressure
+embedded instructions,out-of-scope,out-of-scope,out-of-scope,out-of-scope,,,,lin2025hiddenprompts
+"covert, subtle forms",partial,none,partial,none,imran2026rmct,,han2026implicit;hong2026visual,sharma2023understanding;ye2026taxonomy
+post-deployment drift,none,none,partial,none,,,botas2026aedi;shapira2026rlhf,

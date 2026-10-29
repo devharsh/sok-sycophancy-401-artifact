@@ -1,0 +1,39 @@
+method,tier,access,effect_verbatim,rerun_by_other_group,grade,internal_conflict,refs
+Synthetic anti-sycophancy data,data,T,models tuned with our intervention technique repeat the user's opinion up to 10.0% less often than Flan-PaLM models,Y,B,no,wei2023synthetic
+Supervised pinpoint tuning,training,T,"the answer truthfulness of Llama-2-13B increases from 18.89% to 84.06% (+65.17%) after SFT, while SPT achieves 86.72% (+67.83%)",Y,A,no,chen2024pinpoint
+CAUSM head reweighting,training,T,our CAUSM demonstrates the highest average truthfulness by 47.15% on TruthfulQA across different preference prompts,--,A,yes,li2025causm
+SMART (tree search plus RL),training,T,achieving gains ranging from +31.9% to +46.4% over the sycophantic run,--,A,no,beigi2025smart
+Reward decomposition (GRPO),training,T,reducing answer-priming sycophancy by up to 17 points on SycophancyEval despite the absence of such pressure forms during training,--,A,yes,mohsin2026pressure
+Lagrangian DPO (Dignified Peer),training,T,Lag-DPO achieves the lowest Sycophancy Rate (0.542) [...] reducing servility by 33 points over Vanilla,--,A,no,wang2026dual
+Pressure-Tune,training,T,"the SRR of Llama3-8B increases from 0.69% to 60.33%, while Qwen2.5-3B improves from 29.61% to 85.33%",--,B,no,zhang2025pressure
+"Consistency training (BCT, ACT)",training,T,"While BCT and ACT reduce sycophancy equally well, BCT does better at jailbreak reduction",Y,B,no,irpan2025consistency
+Rate-matching consistency training,training,T,achieving reductions in bias-following comparable to a standard consistency-training baseline on held-out bias types,--,B,no,imran2026rmct
+Holistic DPO,training,T,improving Llama-3.1-8B-Instruct's accuracy under misleading persuasion in safety contexts from 4.21% to 76.54%,--,B,no,tan2025duetpd
+Token-difference DPO,training,T,"TD-DPO achieved the best performance across all three base models, yielding an average NSR of 90.90%",--,B,no,lai2026tddpo
+Sycophantic reflective tuning,training,T,"a significant reduction in sycophantic behavior toward misleading instructions, without resulting in excessive stubbornness",--,B,no,pi2025srt
+Neuron-level fine-tuning,training,T,"our method matches or exceeds state-of-the-art performance on four benchmarks (Syco-Bench, NLP, POLI, PHIL)",--,B,yes,obrien2026neurons
+Bayesian SFT and DPO,training,T,significant reductions in both sycophancy and Bayesian error associated with our novel fine-tuning methods,--,C,yes,atwell2025basil
+"Prompting, SFT, DPO for VLMs",training,T,The DPO method demonstrates impressive performance (-89.2 Syc),--,D,no,li2024mmsy
+Refined DPO,training,T,rDPO is shown to be effective in [...] reduced sycophancy,--,D,no,gallego2024rdpo
+Third-person perspective prompt,inference,B,adopting a third-person perspective reduces sycophancy by up to 63.8% in debate scenario,--,A,no,hong2025sycon
+PCA-guided activation scaling,inference,W,"PAS achieves strong monotonicity (Spearman rho = +0.92) and an average shift of 15.4% per direction, compared with 8.7% for the baselines",--,A,no,chen2026pca
+Sycophancy priors for agent debate,inference,B,improves final discussion accuracy by an absolute 10.5%,--,A,no,kasprova2026polite
+Query neutralizer and decoding,inference,W,"this framework effectively mitigates sycophancy across all evaluated models, while maintaining performance on neutral prompts",--,B,yes,zhao2024itsm
+MONICA reasoning monitor,inference,W,MONICA achieves top-two performance in 33 out of 48 evaluation metrics,--,B,no,hu2025monica
+Silicon Mirror gating,inference,B,"Claude Sonnet 4 exhibits 9.6% baseline sycophancy, reduced to 1.4% by the Silicon Mirror",--,B,no,shah2026silicon
+Bayesian calibration,inference,B,significantly reduces Bayesian error for both the base and sycophancy cases,--,B,no,atwell2025basil
+Ask Don't Tell reframing,inference,B,asking a model to convert non-questions into questions before answering significantly reduces sycophancy,--,C,no,dubois2026askdont
+Contrastive Activation Addition,inference,W,the addition/subtraction of the steering vectors increased/decreased the prevalence of the behavior,Y,C,no,panickssery2023steering
+Persona vectors,inference,W,about 68% (Gemma) and 98% (Qwen) of CAA's reduction in the sycophancy logit,--,C,no,kelkar2026persona
+VIPER prompt (medical VLMs),inference,B,boosts resistance up to 94.7% without sacrificing baseline diagnostic accuracy,--,C,yes,xu2025viper
+Self-blinding,inference,B,exhibit dramatically lower rates of sycophancy,--,C,no,christian2026blinding
+Evidence-guided prompts (code),inference,B,lowering Decision Flip Rates to as low as 12% and False Alignment Rates to as low as 21%,--,C,no,fahad2026codesmell
+THESIS-MoE interventions,inference,W,Our conditional interventions removed up to 90% of the belief-induced sycophancy,--,C,no,hassani2026thesis
+Probe-penalized reward (best-of-N),inference,W,optimizing against this surrogate reward function reduces sycophantic behavior in multiple open-source LLMs,--,D,no,papadatos2024linear
+Regulated causal anchoring,inference,B,achieving 0.0% sycophancy while accepting 88% of valid hints,--,D,yes,chang2026rca;chang2026causal
+Adversarial arbitration,inference,B,DeWin achieving 48.5% accuracy (single model 18.5%),--,D,yes,ryan2026durable
+Cascading linear features,inference,W,"achieves a sycophancy score of 0.33, effectively matching the performance of the strongest system prompting baseline (0.33)",--,D,no,bohacek2026cascading
+FVA-RAG retrieval,inference,B,Reports TruthfulQA accuracy (80.05%) with no user belief injected,--,U,no,ravishankara2025fvarag
+CoRM-RAG evidence critic,inference,B,"Reports accuracy under biased queries, not a sycophancy measure",--,U,no,liu2026cormrag
+Pander Score (AEDI) tracking,policy,B,Continuous deference score proposed for longitudinal tracking,--,n/a,no,botas2026aedi
+Robustness testing in model cards,policy,B,SycEval and SYCON proposed as release criteria,--,n/a,no,fanous2025syceval;hong2025sycon

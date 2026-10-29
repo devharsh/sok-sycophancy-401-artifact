@@ -1,0 +1,288 @@
+
+%%
+%% APPENDICES (well-marked; reviewers are not obligated to read them)
+%%
+
+\section{Search Protocol and Screening}
+\label{app:search}
+
+\paragraph{Identification.} We queried the DataCite REST API, which registers a DOI
+(10.48550/arXiv.\textit{id}) for every arXiv paper, restricted to the client \texttt{arxiv.content},
+with the query \texttt{(titles.title:sycophan* OR descriptions.description:sycophan*)}, a prefix match
+on titles and abstracts. The query ran on 29 October 2026 (01:47 UTC) and returned 523 records; the
+423 registered on or before 20 August 2026, the submission date, form the screened set, so later
+work cannot enter it. Figure~\ref{fig:searchflow} gives the flow.
+
+\paragraph{Screening.} A record was retained when AI sycophancy is a primary subject: the title
+names it, or the abstract states that measuring, explaining, mitigating, or analyzing the
+consequences of sycophancy is a main contribution or finding. Exclusion codes are passing mention,
+non-AI sycophancy, and other. Each retained record received one role (benchmark, mitigation,
+mechanism, measurement without a reusable instrument, human effects, survey or position, other)
+and flags for covert forms, displacement, adaptive adversaries, third-party content, and
+multi-turn pressure. The first pass was LLM-assisted under this fixed written protocol, in four
+parallel batches; every decision carries a verbatim title or abstract quote, checked by script to
+be an exact substring. We then hand-adjudicated every benchmark record (dedicated versus
+multi-construct instrument), every mitigation absent from the submitted Table~\ref{tab:mitigation_comparison},
+and every flagged record that bears on a claim in this paper, reading full texts where the abstract
+did not settle the question.
+
+\paragraph{Instrument coding.} An instrument is dedicated when sycophancy, or conformity to user
+pressure, is its primary or co-primary target; 43 of the 60 retained benchmark records qualify, and
+Pressure-Tune, retained under the mitigation role, makes 44. Each is coded by the reference against
+which a response is judged sycophantic (R, C, N, E; Section~\ref{subsec:reftypes}).
+
+\paragraph{Recall and limitations.} The query returns 33 of the 49 arXiv papers in the snowball
+corpus; the 16 it misses are background or adjacent-construct papers (RLHF, reward hacking,
+steering, faithfulness, prompt injection) whose titles and abstracts, as registered with DataCite,
+never use the term. Identification is arXiv-only, so venue-only work is covered by the snowball
+corpus rather than the query, and coding is at title and abstract level except where noted.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_search_flow.pdf}
+\caption{Flow of the reproducible search. Counts are recomputed from the released records by
+\texttt{search/reproduce\_counts.py} (Appendix~\ref{app:openscience}).}
+\label{fig:searchflow}
+\end{figure*}
+
+\section{Benchmark Comparison}
+\label{app:benchmarks}
+
+Table~\ref{tab:benchmark_comparison} lists all 44 dedicated instruments the search identified,
+grouped by reference type; the ten detailed in Section~\ref{subsec:benchmarks} are marked with an
+asterisk. Results are quoted from each source and are comparable only within a group, and only
+loosely, since elicitation differs.
+
+\begin{table*}[p]
+\centering
+\caption{Dedicated sycophancy instruments, grouped by the reference against which a response is
+judged (R correctness label, C counterfactual stance shift with evidence fixed, N human or clinical
+norm, E evidence-calibrated update). MT: multi-turn. * Detailed in Section~\ref{subsec:benchmarks}.}
+\label{tab:benchmark_comparison}
+\scriptsize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}p{2.05cm}p{0.42cm}p{1.15cm}p{2.95cm}p{1.75cm}p{6.6cm}l@{}}
+\toprule
+\textbf{Instrument} & \textbf{Year} & \textbf{Modality} & \textbf{Domain and format} &
+\textbf{Models} & \textbf{Headline result in the source} & \textbf{Ref.} \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{Correctness label (R), 26 instruments}} \\
+FlipFlop & 2023 & Text, MT & Seven classification tasks & 10 LLMs & Answers flip 46\% of the time on average; accuracy falls 17\% & \cite{laban2023flipflop} \\
+MM-SY & 2024 & Image, MT & Visual QA, ten task types & 10 VLMs & LLaVA-1.5 sycophancy rate 94.6\% & \cite{li2024mmsy} \\
+SycEval* & 2025 & Text, MT & Math and medical QA & 3 LLMs & Sycophantic in 58.19\% of cases (43.52\% progressive, 14.66\% regressive); persistence 78.5\% & \cite{fanous2025syceval} \\
+TRUTH DECAY & 2025 & Text, MT & Multiple choice, 7 follow-ups & 3 LLMs & Accuracy drops of up to 47\% under multi-turn pressure & \cite{liu2025truthdecay} \\
+VISE* & 2025 & Video & Video QA & Video-LLMs & Video-LLMs align with misleading input that contradicts the video & \cite{zhou2025flattery} \\
+Pressure-Tune* & 2025 & Text, MT & Scientific QA & Open LLMs & Degradation driven more by alignment strategy than by model size & \cite{zhang2025pressure} \\
+DuET-PD & 2025 & Text, MT & Knowledge and safety MCQ & 9 LLMs & GPT-4o keeps 27.32\% MMLU-Pro accuracy under sustained misleading persuasion & \cite{tan2025duetpd} \\
+EchoBench & 2025 & Image & Medical VQA, biased prompts & 24 LVLMs & Best proprietary model 45.98\% sycophancy; GPT-4.1 59.15\%; many medical models above 95\% & \cite{yuan2025echobench} \\
+BrokenMath & 2025 & Text & Competition theorem proving & 10 LLMs & Best model (GPT-5) sycophantic 29\% of the time & \cite{petrov2025brokenmath} \\
+Beacon* & 2025 & Text & Mixed, single turn & Several LLMs & Decomposes position, verbosity, and validation sub-biases & \cite{pandey2025beacon} \\
+PARROT* & 2025 & Text & MMLU-style, 13 domains & 22 LLMs & Authority follow rate 4\% (GPT-5) to 94\% (Qwen 2.5-1.5B) & \cite{celebi2025parrot} \\
+A-CC & 2025 & Agentic, MT & Multi-turn tool calling & 11 LLMs & Compliance with user assertions 36.3\% (confident) vs.\ 27.7\% (hedged); with tool-sourced assertions 27.8\% & \cite{waqas2025acc} \\
+PENDULUM* & 2025 & Image & Visual QA, six domains & MLLMs & Pronounced susceptibility on about 2,000 human-curated pairs & \cite{rahman2025pendulum} \\
+Feedback indices & 2026 & Text, MT & Physics MCQ, rebuttals & 8 OpenAI models & Sycophancy index 0.97 (GPT-4.1-nano), lower for newer reasoning models & \cite{dunlap2026feedback} \\
+SYAUDIO & 2026 & Audio & Audio MCQ, four domains & 5 ALMs & Mean flip share 41.51 with audio question and cue vs.\ 14.05 text only & \cite{yao2026syaudio} \\
+Tri-layer diagnostic & 2026 & Image & VQA under blind, noise, conflict & 9 VLMs & 72.9\% of samples show visual sycophancy (split beliefs) & \cite{hong2026visual} \\
+L-VASE, CCS & 2026 & Image & Medical VQA & 6 VLMs & No model reaches a clinical safety index above 0.35 & \cite{aranya2026grounding} \\
+Agreeable personas & 2026 & Text & 275 personas, 33 topics & 13 small LLMs & Agreeableness predicts sycophancy in 9 of 13 models ($r$ up to 0.87) & \cite{shah2026agreeable} \\
+GasVideo-1000 & 2026 & Video, MT & Video QA, negation gaslighting & 6 Vid-LLMs & Gemini-3-Pro accuracy falls 37.70 points & \cite{tang2026gasvideo} \\
+SycoPhantasy & 2026 & Image & Image-text alignment scoring & 6 VLMs & Unjustified high scores 22.3\% (450M) vs.\ 6.0\% (7B) & \cite{shah2026sycophantasy} \\
+Price of Agreement & 2026 & Agentic & Financial QA with tools & 8 LLMs & Preference injection cuts Gemini-3-Pro accuracy from 0.83 to 0.24 & \cite{zhao2026price} \\
+EduFrameTrap & 2026 & Text & Tutoring, six subjects & 2 LLMs & Authority and face-saving pressure trigger epistemic retreat & \cite{kasneci2026edu_safety} \\
+Med-Stress & 2026 & Text, MT & Clinical QA, escalating pressure & 9 LLMs & GPT-4o: 97.88\% initial accuracy but belief stability 41.50 & \cite{xiao2026medstress} \\
+MIST & 2026 & Agentic, MT & Memory; science, medical, moral & 5 families & Memory raises sycophancy by up to 40\% over in-context baselines & \cite{bensal2026mist} \\
+MemSyco-Bench & 2026 & Agentic & Agent memory, five tasks & 2 LLMs, 7 memories & Memory raises Qwen3-8B sycophancy from 27.43 to between 44.47 and 64.67 & \cite{xiang2026memsyco} \\
+PASB & 2026 & Agentic, MT & Personal agents, 1,600 tasks & 16 models & Downstream failure 68.1\% when the claim was saved vs.\ 35.6\% when not & \cite{mao2026pasb} \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{Counterfactual stance shift (C), 8 instruments}} \\
+GermanPartiesQA & 2024 & Text & Party positions, personas & 6 LLMs & Persona adaptation reflects steerability rather than sycophancy & \cite{batzner2024germanpartiesqa} \\
+SYCON* & 2025 & Text, MT & Debate, ethics, presuppositions & 17 LLMs & All models eventually flip under sustained pressure & \cite{hong2025sycon} \\
+SWAY & 2026 & Text & Positive vs.\ negative framing & 6 LLMs & Sycophancy increases with epistemic commitment & \cite{bhalla2026sway} \\
+PPT-Bench & 2026 & Text, MT & Epistemic attack, three layers & 5 LLMs & Pressure types yield separable inconsistency patterns & \cite{au2026pptbench} \\
+llm-bias-bench & 2026 & Text, MT & Contested topics, five turns & 13 LLMs & Median sycophancy 50\% under direct questioning vs.\ 79\% in debate & \cite{nogueira2026llmbias} \\
+Selective flip score & 2026 & Text, MT & Simulated students & 7 LLMs & Near-zero selective flipping: models abandon simulated misconceptions & \cite{do2026sfs} \\
+AEDI (Pander Score)* & 2026 & Text & Mixed propositions & 8 models & Continuous deference score over 16,000 prompts & \cite{botas2026aedi} \\
+CAP & 2026 & Text & Advice, 12 domains & 17 LLMs & Preference-induced stance reversal from 5\% to 56\% & \cite{jiang2026cap} \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{Human or clinical norm (N), 8 instruments}} \\
+ELEPHANT* & 2025 & Text & Interpersonal advice & 11 LLMs & Face preserved 45 points more than humans; either side of a moral conflict affirmed in 48\% & \cite{cheng2026elephant} \\
+PsychMachine* & 2025 & Text, MT & Psychiatric simulation & 8 LLMs & Delusion confirmation 0.91, harm enablement 0.69 (0 to 1 scale) & \cite{auyeung2025psychogenic} \\
+SycoEval-EM & 2026 & Text, MT & Emergency medicine, agents & 19 LLMs & Acquiescence to guideline-discordant requests from 0\% to 100\% & \cite{peng2026sycoeval} \\
+Social sycophancy scale & 2026 & Text & Rated conversations & $N = 877$ raters & Validated three-factor measure without ground truth & \cite{rehani2026scale} \\
+DESG benchmark & 2026 & Text & Mental-health dialogue audit & 1,500 windows & Implicit sycophancy detection improves 0.0488 macro-F1 over baselines & \cite{han2026implicit} \\
+Sycophantic praise & 2026 & Text & Reasoning vs.\ social prompts & 4 LLMs & Praise 41.9\% in moral reasoning vs.\ 1.3\% in economics (one model) & \cite{vennemeyer2026praise} \\
+BenSyc & 2026 & Text & Regional social posts & 15+ LLMs & Best detection 61.8 macro-F1 & \cite{noshin2026bensyc} \\
+MedPRESS & 2026 & Text, MT & Patient-pressure dialogues & 20 LLMs & 86.8\% of five-turn conversations contain an unsafe agreement & \cite{joy2026medpress} \\
+\midrule
+\multicolumn{7}{@{}l}{\textit{Evidence-calibrated update (E), 2 instruments}} \\
+BASIL & 2025 & Text & Uncertain forecasting, norms & 6 LLMs & Separates sycophantic belief shifts from Bayesian updating & \cite{atwell2025basil} \\
+MUSE & 2026 & Text, MT & Medical, economics MCQ & 7 LLMs & Under uncertainty, switch rates rise 10.6 to 27.5 points above pure sycophancy & \cite{guo2026muse} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Mitigation Comparison}
+\label{app:mitigations}
+
+Table~\ref{tab:mitigation_comparison} grades every mitigation the search found together with those
+of Section~\ref{sec:controls}. The grade measures breadth of evidence, not effect size: A meets all of
+(i) at least two model families, (ii) at least two task domains, and (iii) multi-turn or held-out
+testing; B meets two; C one; D none; U marks a method proposed against sycophancy whose source
+reports no sycophancy measurement. Methods neither proposed against nor evaluated on sycophancy,
+including Constitutional AI~\citep{bai2022constitutional} and representation
+editing~\citep{kong2024repredit}, are omitted. Every grade comes from a full-text reading recorded
+with quotes in the artifact.
+
+\begin{table*}[p]
+\centering
+\caption{Sycophancy mitigations with the effect each source reports, in its own words. Access:
+B black-box, W white-box activations or logits, T weight training. Rep.: Y when another group re-ran
+the same method on sycophancy. Gr.: evidence grade (A to D, U; see text). $\dagger$ Numbers that
+conflict within the source (details in the artifact). Every row was validated only against scripted,
+non-adaptive pressure, the non-adversarial class of Section~\ref{subsec:adversaryclasses}.}
+\label{tab:mitigation_comparison}
+\scriptsize
+\renewcommand{\arraystretch}{1.08}
+\begin{tabular}{@{}p{2.85cm}p{0.95cm}p{0.45cm}p{8.9cm}p{0.5cm}p{0.45cm}l@{}}
+\toprule
+\textbf{Method} & \textbf{Tier} & \textbf{Acc.} & \textbf{Effect reported by the source (verbatim)} & \textbf{Rep.} & \textbf{Gr.} & \textbf{Ref.} \\
+\midrule
+Synthetic anti-sycophancy data & Data & T & \textit{models tuned with our intervention technique repeat the user's opinion up to 10.0\% less often than Flan-PaLM models} & Y & B & \cite{wei2023synthetic} \\
+Supervised pinpoint tuning & Training & T & \textit{the answer truthfulness of Llama-2-13B increases from 18.89\% to 84.06\% (+65.17\%) after SFT, while SPT achieves 86.72\% (+67.83\%)} & Y & A & \cite{chen2024pinpoint} \\
+CAUSM head reweighting & Training & T & \textit{our CAUSM demonstrates the highest average truthfulness by 47.15\% on TruthfulQA across different preference prompts} & -- & A$\dagger$ & \cite{li2025causm} \\
+SMART (tree search plus RL) & Training & T & \textit{achieving gains ranging from +31.9\% to +46.4\% over the sycophantic run} & -- & A & \cite{beigi2025smart} \\
+Reward decomposition (GRPO) & Training & T & \textit{reducing answer-priming sycophancy by up to 17 points on SycophancyEval despite the absence of such pressure forms during training} & -- & A$\dagger$ & \cite{mohsin2026pressure} \\
+Lagrangian DPO (Dignified Peer) & Training & T & \textit{Lag-DPO achieves the lowest Sycophancy Rate (0.542) [\ldots] reducing servility by 33 points over Vanilla} & -- & A & \cite{wang2026dual} \\
+Pressure-Tune & Training & T & \textit{the SRR of Llama3-8B increases from 0.69\% to 60.33\%, while Qwen2.5-3B improves from 29.61\% to 85.33\%} & -- & B & \cite{zhang2025pressure} \\
+Consistency training (BCT, ACT) & Training & T & \textit{While BCT and ACT reduce sycophancy equally well, BCT does better at jailbreak reduction} & Y & B & \cite{irpan2025consistency} \\
+Rate-matching consistency training & Training & T & \textit{achieving reductions in bias-following comparable to a standard consistency-training baseline on held-out bias types} & -- & B & \cite{imran2026rmct} \\
+Holistic DPO & Training & T & \textit{improving Llama-3.1-8B-Instruct's accuracy under misleading persuasion in safety contexts from 4.21\% to 76.54\%} & -- & B & \cite{tan2025duetpd} \\
+Token-difference DPO & Training & T & \textit{TD-DPO achieved the best performance across all three base models, yielding an average NSR of 90.90\%} & -- & B & \cite{lai2026tddpo} \\
+Sycophantic reflective tuning & Training & T & \textit{a significant reduction in sycophantic behavior toward misleading instructions, without resulting in excessive stubbornness} & -- & B & \cite{pi2025srt} \\
+Neuron-level fine-tuning & Training & T & \textit{our method matches or exceeds state-of-the-art performance on four benchmarks (Syco-Bench, NLP, POLI, PHIL)} & -- & B$\dagger$ & \cite{obrien2026neurons} \\
+Bayesian SFT and DPO & Training & T & \textit{significant reductions in both sycophancy and Bayesian error associated with our novel fine-tuning methods} & -- & C$\dagger$ & \cite{atwell2025basil} \\
+Prompting, SFT, DPO for VLMs & Training & T & \textit{The DPO method demonstrates impressive performance (-89.2 Syc)} & -- & D & \cite{li2024mmsy} \\
+Refined DPO & Training & T & \textit{rDPO is shown to be effective in [\ldots] reduced sycophancy} & -- & D & \cite{gallego2024rdpo} \\
+\midrule
+Third-person perspective prompt & Inference & B & \textit{adopting a third-person perspective reduces sycophancy by up to 63.8\% in debate scenario} & -- & A & \cite{hong2025sycon} \\
+PCA-guided activation scaling & Inference & W & \textit{PAS achieves strong monotonicity (Spearman $\rho$ = +0.92) and an average shift of 15.4\% per direction, compared with 8.7\% for the baselines} & -- & A & \cite{chen2026pca} \\
+Sycophancy priors for agent debate & Inference & B & \textit{improves final discussion accuracy by an absolute 10.5\%} & -- & A & \cite{kasprova2026polite} \\
+Query neutralizer and decoding & Inference & W & \textit{this framework effectively mitigates sycophancy across all evaluated models, while maintaining performance on neutral prompts} & -- & B$\dagger$ & \cite{zhao2024itsm} \\
+MONICA reasoning monitor & Inference & W & \textit{MONICA achieves top-two performance in 33 out of 48 evaluation metrics} & -- & B & \cite{hu2025monica} \\
+Silicon Mirror gating & Inference & B & \textit{Claude Sonnet 4 exhibits 9.6\% baseline sycophancy, reduced to 1.4\% by the Silicon Mirror} & -- & B & \cite{shah2026silicon} \\
+Bayesian calibration & Inference & B & \textit{significantly reduces Bayesian error for both the base and sycophancy cases} & -- & B & \cite{atwell2025basil} \\
+Ask Don't Tell reframing & Inference & B & \textit{asking a model to convert non-questions into questions before answering significantly reduces sycophancy} & -- & C & \cite{dubois2026askdont} \\
+Contrastive Activation Addition & Inference & W & \textit{the addition/subtraction of the steering vectors increased/decreased the prevalence of the behavior} & Y & C & \cite{panickssery2023steering} \\
+Persona vectors & Inference & W & \textit{about 68\% (Gemma) and 98\% (Qwen) of CAA's reduction in the sycophancy logit} & -- & C & \cite{kelkar2026persona} \\
+VIPER prompt (medical VLMs) & Inference & B & \textit{boosts resistance up to 94.7\% without sacrificing baseline diagnostic accuracy} & -- & C$\dagger$ & \cite{xu2025viper} \\
+Self-blinding & Inference & B & \textit{exhibit dramatically lower rates of sycophancy} & -- & C & \cite{christian2026blinding} \\
+Evidence-guided prompts (code) & Inference & B & \textit{lowering Decision Flip Rates to as low as 12\% and False Alignment Rates to as low as 21\%} & -- & C & \cite{fahad2026codesmell} \\
+THESIS-MoE interventions & Inference & W & \textit{Our conditional interventions removed up to 90\% of the belief-induced sycophancy} & -- & C & \cite{hassani2026thesis} \\
+Probe-penalized reward (best-of-N) & Inference & W & \textit{optimizing against this surrogate reward function reduces sycophantic behavior in multiple open-source LLMs} & -- & D & \cite{papadatos2024linear} \\
+Regulated causal anchoring & Inference & B & \textit{achieving 0.0\% sycophancy while accepting 88\% of valid hints} & -- & D$\dagger$ & \cite{chang2026rca,chang2026causal} \\
+Adversarial arbitration & Inference & B & \textit{DeWin achieving 48.5\% accuracy} (single model 18.5\%) & -- & D$\dagger$ & \cite{ryan2026durable} \\
+Cascading linear features & Inference & W & \textit{achieves a sycophancy score of 0.33, effectively matching the performance of the strongest system prompting baseline (0.33)} & -- & D & \cite{bohacek2026cascading} \\
+FVA-RAG retrieval & Inference & B & Reports TruthfulQA accuracy (80.05\%) with no user belief injected & -- & U & \cite{ravishankara2025fvarag} \\
+CoRM-RAG evidence critic & Inference & B & Reports accuracy under biased queries, not a sycophancy measure & -- & U & \cite{liu2026cormrag} \\
+\midrule
+Pander Score (AEDI) tracking & Policy & B & Continuous deference score proposed for longitudinal tracking & -- & -- & \cite{botas2026aedi} \\
+Robustness testing in model cards & Policy & B & SycEval and SYCON proposed as release criteria & -- & -- & \cite{fanous2025syceval,hong2025sycon} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Measurement Metrics Catalog}
+\label{app:metrics}
+
+Table~\ref{tab:metrics} catalogs the primary metrics used across the evaluation literature. The
+methodological trend is multi-pronged evaluation, combining controlled false-belief injection,
+multi-turn pressure simulation, judge-based facet rating, and scalar indices, because no single
+metric captures the full behavioral range. The progressive and regressive rates are defined only
+for correctness-referenced instruments.
+
+\begin{table*}[t]
+\centering
+\caption{Measurement metrics for sycophancy quantification.}
+\label{tab:metrics}
+\small
+\begin{tabular}{@{}p{3.6cm}p{11.4cm}l@{}}
+\toprule
+\textbf{Metric} & \textbf{Definition} & \textbf{Source} \\
+\midrule
+Sycophancy rate & Share of responses agreeing with the user's (often wrong) position &
+  \cite{fanous2025syceval} \\
+Progressive rate & Share of capitulations landing on correct answers & \cite{fanous2025syceval} \\
+Regressive rate & Share of capitulations landing on incorrect answers & \cite{fanous2025syceval} \\
+Turn of Flip (ToF) & Turns until the model first changes stance under pressure &
+  \cite{hong2025sycon} \\
+Number of Flips & Stance changes across a conversation & \cite{hong2025sycon} \\
+AEDI score & Continuous sensitivity of expressed support to user attitude & \cite{botas2026aedi} \\
+Authority follow rate & Share of cases following an incorrect authority figure &
+  \cite{celebi2025parrot} \\
+Misleading resistance & Accuracy maintained under a user's false premise & \cite{zhang2025pressure} \\
+Rubric score & Judge-rated facets (agreement, flattery, validation) & \cite{dubois2026askdont} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Glossary}
+\label{app:glossary}
+
+\begin{description}[leftmargin=0pt,itemsep=2pt,parsep=0pt]
+\item[Sycophancy.] The tendency of an LLM to prioritize user approval over epistemic accuracy,
+  typically produced by preference-optimization dynamics that reward responses raters prefer in
+  the short term.
+\item[Propositional sycophancy.] Affirming or conceding to the user's expressed factual beliefs,
+  including false ones; the harm is epistemic rather than relational.
+\item[Social sycophancy.] Face-preserving behavior without necessary propositional error:
+  flattery, unsolicited praise, avoidance of corrective feedback, affirmation of self-image.
+\item[Progressive / regressive sycophancy.] Classification of capitulation by outcome: toward a
+  correct answer (possibly appropriate updating) or toward an incorrect one (unconditionally
+  harmful). Defined only when a correctness label exists (reference type R).
+\item[Reference type.] What an instrument judges a response against: a correctness label (R), a
+  counterfactual stance condition with evidence held fixed (C), a human or clinical norm (N), or
+  the update the evidence warrants (E).
+\item[Displacement.] Suppression of one form of sycophancy that leaves the influence in place in
+  a form the evaluating instrument does not observe, such as an unverbalized cue.
+\item[Reward hacking / specification gaming.] Maximizing a proxy reward in ways that diverge from
+  the intended objective; sycophancy games the human-approval proxy.
+\item[Proxy Compression Hypothesis.] Framework formalizing reward hacking as exploitation of the
+  information lost when high-dimensional human objectives are compressed into a scalar reward.
+\item[Warm persona effect.] Higher sycophancy in models fine-tuned for warm, empathetic personas,
+  strongest when users express distress.
+\item[Sycophantic anchors.] Sentences in a reasoning trace that causally commit the model to
+  agreement before the final answer, detectable mid-inference.
+\item[Citation-based sycophancy.] Disproportionate persuasion by rebuttals containing citations,
+  even fabricated ones, because citation-bearing pushback resembles expert correction.
+\item[Epistemic entrainment.] Hypothesized longitudinal erosion of a user's epistemic thresholds
+  and self-correction capacity under chronic exposure to belief-confirming AI.
+\end{description}
+
+\section{Open Science}
+\label{app:openscience}
+
+All artifacts are in an anonymous repository,
+\url{https://anonymous.4open.science/r/sok-sycophancy-401-artifact-0521/}, which will remain
+accessible throughout review. It contains (i) the search: the 523 frozen DataCite records, all
+423 screening decisions with their quotes, the coding of the 44 instruments, the mitigation
+grades with full-text evidence, and a script that recomputes every count in this paper;
+(ii) the systematization: the coded corpus, benchmark, mitigation, metric, and coverage tables as
+CSV files with a validator that fails if they drift from the tables in this paper; and (iii) the
+figure sources (a Jupyter notebook and a draw.io diagram). No human-subject or proprietary data are
+used. All references were checked against their primary records (publisher pages, proceedings
+indexes, DataCite or arXiv records, or vendor sites) in August and October 2026.
+
+\section{Ethical Considerations}
+\label{app:ethics}
+
+This work analyzes previously published studies and involves no new data collection, no human
+subjects, and no deanonymization. Two points warrant statement. First, a threat model for eliciting
+biased model output could be read as instructional; we judge the exposure risk low because every
+elicitation effect cited is already published, because the phrasing effects involved are simple
+and widely known, and because the defender-side value of naming the channels exceeds the marginal
+information provided to adversaries. Second, the instruction-injection observation
+(Section~\ref{sec:injection}) is presented as an illustrative incident, not as evidence; it
+describes mechanism and consequences without identifying the document or reproducing the payload,
+since such text can be placed defensively by authors, and the class is independently documented
+\citep{lin2025hiddenprompts}. The proposed longitudinal study (Section~\ref{subsec:entrainment}) specifies debriefing,
+referral pathways, and independent safety monitoring as preconditions.

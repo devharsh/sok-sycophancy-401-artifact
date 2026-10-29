@@ -1,0 +1,154 @@
+
+%%
+%% SECTION 8: SECURITY CONTROLS
+%%
+\section{Security Controls: Mitigation as Defense in Depth}
+\label{sec:controls}
+
+Mitigation research spans the model lifecycle, from curation of preference data through targeted
+fine-tuning, inference-time prompting and steering, real-time monitoring, and governance.
+Figure~\ref{fig:mitigation} organizes the interventions into four tiers, and
+Appendix~\ref{app:mitigations} grades every mitigation the search found. Reading them as security
+controls imposes a discipline the literature mostly lacks: each control must state which channel of
+the threat model it addresses (Table~\ref{tab:coverage}), what evidence supports it, and which
+adversary class it was validated against.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_mitigation.pdf}
+\caption{Four control tiers with example mitigations and their evidence grade from
+Table~\ref{tab:mitigation_comparison} (A: at least two model families, at least two domains, and
+multi-turn or held-out testing; B: two of these; C: one). Later tiers complement but do not
+substitute for earlier ones.}
+\label{fig:mitigation}
+\end{figure}
+
+\subsection{Grading the Evidence}
+\label{subsec:grading}
+
+Ordinal effectiveness ratings hide how heterogeneous the underlying evidence is, so
+Table~\ref{tab:mitigation_comparison} instead reports each source's own effect verbatim, whether
+another group has re-run the method, and a grade for breadth of evidence. Of 36 graded methods, 8
+reach A, 12 B, 8 C, and 6 D; two proposed specifically against sycophancy report no sycophancy
+measurement at all. Only four have been re-run on sycophancy by another group: synthetic
+anti-sycophancy data, pinpoint tuning, bias-augmented consistency training, and Contrastive
+Activation Addition. For eight rows, our full-text reading found numbers that conflict within the
+source paper. And no method was validated against an adaptive adversary: every evaluation applies
+scripted pressure, the non-adversarial class of Section~\ref{subsec:adversaryclasses}.
+
+\subsection{Data and Training Tier}
+\label{subsec:training}
+
+The most durable interventions act before deployment. Adding synthetic examples in which
+sycophantic responses are marked incorrect reduces sycophancy on held-out
+prompts~\citep{wei2023synthetic}, an approach extended to decoder-only architectures
+by \citet{wang2024synthetic}, re-run as a baseline by three other
+groups~\citep{chen2024pinpoint,beigi2025smart,obrien2026neurons}, and carried to adversarial
+dialogue by Pressure-Tune~\citep{zhang2025pressure}. Precision matters as much as data: Supervised
+Pinpoint Tuning fine-tunes only the fewer than 5\% of attention heads that drive sycophancy,
+raising the truthfulness of Llama-2-13B by 67.83 points with 168 million tunable parameters, where
+naive fine-tuning on the same objective costs 8.57 points of GSM8K accuracy~\citep{chen2024pinpoint}.
+CAUSM removes spurious user-preference correlations through causally motivated head
+reweighting~\citep{li2025causm}, SMART trains on truthful trajectories found by uncertainty-aware
+tree search~\citep{beigi2025smart}, and reward decomposition splits the RL reward into
+pressure-resistance and evidence-responsiveness terms~\citep{mohsin2026pressure}; all three grade A.
+Consistency training makes behavior on prompts with and without the user's cue
+alike~\citep{irpan2025consistency}, and its rate-matching variant is the one intervention tested
+against displacement (Section~\ref{subsec:appraisal})~\citep{imran2026rmct}. Direct Preference
+Optimization on anti-sycophancy pairs reduces sycophancy in six independent
+studies~\citep{li2024mmsy,tan2025duetpd,atwell2025basil,gallego2024rdpo,wang2026dual,lai2026tddpo},
+with grades from A to D, and it exposes the over-correction risk of every resistance control: on a
+vision-language model, DPO cut sycophancy from 94.6\% to 5.4\% while acceptance of valid user
+corrections fell from 98.6\% to 1.7\%~\citep{li2024mmsy}. Objectives that also reward accepting
+genuine corrections~\citep{tan2025duetpd,wang2026dual} are the remedy.
+
+\subsection{Inference Tier: Prompting, Steering, Monitoring}
+\label{subsec:inference}
+
+Inference-time controls deploy on existing systems without weight updates, exploiting the framing
+sensitivity of Section~\ref{subsec:prompt_sensitivity}. Asking the model to convert a user's
+assertion into a question before answering reduces sycophancy more than instructing it not to be
+sycophantic~\citep{dubois2026askdont}. A neutral third-person perspective reduces sycophancy by up
+to 63.8\% in multi-turn debate, measured as turns before the first flip, but its effect is mixed on
+false presuppositions and degrades as conversations lengthen~\citep{hong2025sycon}, exactly the
+regime the threat model flags. Prompt-level defenses now reach medical images~\citep{xu2025viper},
+code review~\citep{fahad2026codesmell}, agent gating~\citep{shah2026silicon}, and multi-agent
+debate, where giving agents priors about which peers are sycophancy-prone raises final accuracy by
+10.5 points~\citep{kasprova2026polite}. They need no model access, which makes them the only
+option for closed APIs, but two thirds of the black-box methods grade C or below.
+
+White-box access enables steering. Contrastive Activation Addition adds a vector derived from
+labeled sycophantic and non-sycophantic contrast pairs~\citep{panickssery2023steering}; independent
+re-runs confirm reductions on other model families~\citep{kelkar2026persona,chen2026pca}, but its
+original multiple-choice effect is small and not monotonic in the steering direction and was
+tested on one model family, so it grades C. PCA-guided scaling makes steering monotonic across
+three model families~\citep{chen2026pca}, linear probes in attention activations modulate
+sycophancy without degrading factual accuracy~\citep{genadi2026linear}, and the anchor localization
+of \citet{duszenko2026anchors} suggests control could target the generation steps where agreement
+is committed. For reasoning models, MONICA monitors per-step drift and calibrates it away
+mid-inference across 12 datasets and three models~\citep{hu2025monica}.
+
+\subsection{Governance Tier and Human Oversight}
+\label{subsec:policy}
+
+Technical controls persist only if evaluation is institutionalized. Development pipelines should
+measure sycophancy the way bias and hallucination are measured, comparing outputs with and without
+user-belief context~\citep{fanous2025syceval}, with AEDI providing a scalar suitable for
+longitudinal tracking across model versions~\citep{botas2026aedi}. High-stakes deployments should
+be required to report multi-turn adversarial results (SYCON, Pressure-Tune) and single-turn
+factual audits (SycEval) in model cards and release criteria~\citep{hong2025sycon,
+zhang2025pressure,fanous2025syceval}, and because the four reference types of
+Section~\ref{subsec:reftypes} certify different things, a release criterion should name its type.
+In sensitive domains, systems should be restricted from unqualified agreement, with human
+professional oversight when input suggests clinical risk.
+
+Oversight obligations follow from the consequence evidence. Sycophancy erodes epistemic autonomy,
+shaping beliefs toward the user's priors while raising trust~\citep{turner2026programmed,
+cheng2025prosocial,ibrahim2026warm}. Deployers serving vulnerable populations, where safety
+interventions occur in fewer than one third of delusional-content
+turns~\citep{auyeung2025psychogenic} and compliance with clinically false requests reaches
+100\%~\citep{chen2025helpfulness}, carry a duty of care to demonstrate sycophancy resistance under
+social and authority pressure, not merely to pass static content classifiers. Transparency is the
+last layer: disclosures, visible disagreement indicators, and interface guidance are legitimate
+controls at the interaction layer.
+
+\subsection{Coverage: Controls Against the Threat Model}
+\label{subsec:coverage}
+
+Table~\ref{tab:coverage} crosses the control tiers with the channels of
+Section~\ref{sec:threatmodel}. Three structural gaps stand out. First, coverage of premise and
+document assertions is thin rather than absent: A-CC measures compliance with assertions supplied by
+tools as well as users~\citep{waqas2025acc}, and two retrieval-side controls target
+belief-confirming evidence~\citep{ravishankara2025fvarag,liu2026cormrag}, but neither reports a
+sycophancy measurement, so the channel is coded partial. Instructions embedded in documents are
+indirect prompt injection (Section~\ref{sec:injection}); their defenses lie outside our corpus, so
+that row is marked out of scope rather than undefended. Second, covert sycophancy is only beginning
+to be measured~\citep{han2026implicit,hong2026visual}, and the one control validated against
+displacement addresses unverbalized cue influence~\citep{imran2026rmct}, not selective framing in
+open-ended advice, so full circles in the overt rows still overstate assurance against covert
+variants. Third, the strongest cells depend on white-box access or retraining, leaving deployments
+on closed third-party APIs with prompting and monitoring alone.
+
+\begin{table}[t]
+\centering
+\caption{Control coverage against threat-model channels. \cfull{} = a control in this tier
+directly targets the channel with published evaluation; \cpart{} = partial, degrading, or
+proxy-only coverage; \cnone{} = no published control; o.s.\ = out of scope (indirect prompt
+injection). Coding and per-cell citations are in the artifact (Appendix~\ref{app:openscience}).}
+\label{tab:coverage}
+\small
+\begin{tabular}{@{}p{2.6cm}cccc@{}}
+\toprule
+\textbf{Channel} & \textbf{Data/} & \textbf{Infer-} & \textbf{Monitor/} & \textbf{Human} \\
+ & \textbf{train} & \textbf{ence} & \textbf{govern} & \textbf{oversight} \\
+\midrule
+Single-turn framing (assert, certainty) & \cfull & \cfull & \cpart & \cpart \\
+Multi-turn pressure & \cpart & \cpart & \cpart & \cnone \\
+Authority, emotion framing & \cpart & \cpart & \cpart & \cnone \\
+Premise, document assertions & \cnone & \cpart & \cpart & \cpart \\
+Embedded instructions & o.s. & o.s. & o.s. & o.s. \\
+Covert, subtle forms & \cpart & \cnone & \cpart & \cnone \\
+Post-deployment drift & \cnone & \cnone & \cpart & \cnone \\
+\bottomrule
+\end{tabular}
+\end{table}

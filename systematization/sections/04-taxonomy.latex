@@ -1,0 +1,91 @@
+%%
+%% SECTION 4: TAXONOMY
+%%
+\section{Defining and Taxonomizing Sycophancy}
+\label{sec:taxonomy}
+
+Definitional clarity is a prerequisite for cumulative research and for any control that must state
+what it protects against: studies using incompatible categories cannot be compared, and a
+mitigation validated against one behavior may not generalize to another. This section consolidates
+the definitional landscape into the taxonomy of Figure~\ref{fig:taxonomy} and
+Table~\ref{tab:taxonomy}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\columnwidth]{fig_taxonomy.pdf}
+\caption{Taxonomy of sycophantic behavior in LLMs organized along two primary axes: target
+(propositional versus social) and directness (overt versus covert). The progressive/regressive
+distinction applies within propositional sycophancy and determines whether capitulation lands on
+a correct or incorrect answer.}
+\label{fig:taxonomy}
+\end{figure}
+
+The most widely adopted working definition treats sycophancy as the tendency of an LLM to generate
+responses that align with a user's stated or implied beliefs at the expense of
+truthfulness~\citep{sharma2023understanding}, with \citet{malmqvist2024sycophancy} framing it as
+excessive agreement or flattery that threatens reliability and ethical deployment.
+\citet{cheng2026elephant} broaden the construct with \emph{social sycophancy}, the excessive
+preservation of the user's face: affirmation of choices, judgments, and identity even when clearly
+problematic, and avoidance of any response that might offend.
+
+\begin{table}[ht]
+\centering
+\caption{Primary sycophancy types and definitions.}
+\label{tab:taxonomy}
+\small
+\begin{tabular}{@{}p{1.5cm}p{0.39\linewidth}p{0.29\linewidth}@{}}
+\toprule
+\textbf{Type} & \textbf{Description} & \textbf{Example} \\
+\midrule
+Propositional & Affirming user beliefs (even if false) at the expense of accuracy &
+  Agreeing that a historical date is correct when it is not \\
+Social & Preserving user face through validation, flattery, or avoidance of disagreement &
+  Endorsing a user's poor decision to maintain rapport \\
+Progressive & Yielding to user pressure when the user happens to be correct &
+  Arriving at the right answer only after pushback \\
+Regressive & Yielding to user pressure when the user is incorrect &
+  Abandoning a correct answer due to user displeasure \\
+Subtle / implicit & Selective framing, omission of contrary evidence, or deferential hedging &
+  Mentioning only evidence that supports the user's view \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The most systematic organization to date is the two-axis framework \citet{ye2026taxonomy} derive
+from their 70-paper review. The first axis is \emph{target}: whether sycophancy is directed at the
+user's positions and beliefs (propositional or epistemic sycophancy) or at the user's broader
+traits and emotions (social sycophancy). The second is \emph{directness}: whether the behavior is
+explicit, such as outright agreement with a false claim, or implicit and subtle, such as selective
+framing, omission of contrary evidence, or deferential tone. The covert half of this axis is the
+part no current benchmark measures well, a gap Section~\ref{sec:measurement} returns to.
+
+Within propositional sycophancy, outcome matters. \citet{fanous2025syceval} distinguish
+\emph{progressive} sycophancy, capitulation that lands on the correct answer, from
+\emph{regressive} sycophancy, capitulation that lands on an incorrect one, observing rates of
+43.52\% and 14.66\% respectively in their benchmark. Progressive capitulation may be appropriate
+updating when the user corrects a genuine model error; regressive capitulation is unconditionally
+harmful, and aggregate metrics that merge the two overstate harm in domains where users are often
+right. A terminological caution applies: parts of the literature use progressive for the temporal
+pattern of gradual capitulation across turns. Throughout this SoK, including the glossary in
+Appendix~\ref{app:glossary}, the pair is reserved strictly for outcome, following
+\citet{fanous2025syceval}, and the temporal phenomenon is described as incremental or
+accelerating capitulation (Section~\ref{subsec:multiturn}).
+
+The taxonomy is not merely descriptive; its classes are mechanistically distinct.
+\citet{vennemeyer2025notone} show through activation analysis across multiple models that
+sycophantic agreement and sycophantic praise are encoded along distinct linear directions that can
+be amplified or suppressed independently, so an intervention that targets one form may leave
+others intact. This single finding constrains every mitigation claim in
+Section~\ref{sec:controls}.
+
+Sycophancy is related to, but distinct from, adjacent failure modes.
+Hallucination~\citep{ji2023hallucination} is not necessarily aligned with any user belief, whereas
+sycophantic content is directionally biased toward the user; the two co-occur when a model
+agreeing with a false premise hallucinates supporting detail. \citet{burns2022latent} show that
+models often encode the accurate answer internally while producing false output, suggesting
+suppression of latent knowledge rather than its absence. Specification
+gaming~\citep{amodei2016concrete} and reward hacking~\citep{skalse2022reward} are the umbrella
+phenomena: the Proxy Compression Hypothesis of \citet{wang2026pch} unifies sycophancy, verbosity
+bias, and hallucinated justification as exploitations of the information lost when human
+objectives are compressed into a scalar reward, and \citet{denison2024subterfuge} show the same
+gaming can escalate to reward tampering.

@@ -1,0 +1,186 @@
+%%
+%% SECTION 6: MEASUREMENT
+%%
+\section{Measurement: Benchmarks as Assurance Instruments}
+\label{sec:measurement}
+
+Measuring sycophancy requires isolating social pressure from legitimate position updating: a model
+that changes its answer because the user supplied new evidence is doing its job, while one that
+changes because the user expressed displeasure is not. A rapidly growing set of benchmarks
+operationalizes this distinction across single-turn and multi-turn settings, factual and advisory
+domains, text and visual modalities, and individual and authority-framed pressure. Because these
+instruments are the only assurance available for this failure mode, we read them here the way one
+reads a security evaluation suite: what each measures, on what elicitation, and what a passing
+score does and does not certify. Figure~\ref{fig:benchmarks} shows measured rates across the
+primary suites, and Table~\ref{tab:benchmarks} summarizes their scope; full per-benchmark
+strengths and limitations appear in Appendix~\ref{app:benchmarks}, with the metric catalog in
+Appendix~\ref{app:metrics}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\columnwidth]{fig_benchmarks.pdf}
+\caption{Sycophancy and compliance rates across benchmark evaluations, grouped by construct type.
+PARROT tests authority-pressure resistance, ELEPHANT and SYCON measure face preservation and
+stance flips, PsychMachine captures delusion confirmation, and SycEval quantifies factual
+capitulation. Rates are not directly comparable across groups because each benchmark
+operationalizes a distinct construct. The dashed line at 50\% marks the point at which sycophantic
+responses outnumber truthful ones.}
+\label{fig:benchmarks}
+\end{figure}
+
+\subsection{Evaluation Paradigms and Benchmark Suites}
+\label{subsec:benchmarks}
+
+The early paradigm, established by \citet{sharma2023understanding}, obtains a correct initial
+answer to a factual question, presents a challenge (``I think the answer is actually X''), and
+measures capitulation; \citet{perez2023discovering} scale this using model-written evaluations.
+TruthfulQA~\citep{lin2022truthfulqa} probes the adjacent tendency to reproduce popular falsehoods:
+817 questions across 38 categories on which the best model of the time was truthful on only 58\%,
+against 94\% for humans.
+
+\begin{table}[ht]
+\centering
+\caption{Dedicated sycophancy benchmarks and their evaluation focus (details in
+Appendix~\ref{app:benchmarks}).}
+\label{tab:benchmarks}
+\small
+\begin{tabular}{@{}llp{2.55cm}@{}}
+\toprule
+\textbf{Benchmark} & \textbf{Domain, format} & \textbf{Focus} \\
+\midrule
+SycEval~\citep{fanous2025syceval} & Math/med QA, 1-turn & False-belief agreement \\
+SYCON~\citep{hong2025sycon} & Debate/ethics, multi-turn & Stance-flip speed, frequency \\
+ELEPHANT~\citep{cheng2026elephant} & Advice, 1-turn & Face preservation \\
+PARROT~\citep{celebi2025parrot} & MMLU-style, 1-turn & Authority-pressure follow rate \\
+PENDULUM~\citep{rahman2025pendulum} & Visual QA & Visual sycophancy \\
+VISE~\citep{zhou2025flattery} & Video QA & Video-LLM sycophancy \\
+Pressure-Tune~\citep{zhang2025pressure} & Scientific QA, multi-turn & False-premise resistance \\
+AEDI~\citep{botas2026aedi} & Mixed, 1-turn & Continuous deference score \\
+Beacon~\citep{pandey2025beacon} & Mixed, 1-turn & Sub-bias decomposition \\
+PsychMachine~\citep{auyeung2025psychogenic} & Psychiatric, multi-turn & Delusion confirmation \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The dedicated suites divide by construct. For factual capitulation,
+SycEval~\citep{fanous2025syceval}, published at AIES 2025, benchmarks three assistants across
+mathematics and medical advice and observes sycophantic behavior in 58.19\% of cases with high
+persistence (78.5\%, 95\% CI [77.2\%, 79.8\%]), with citation-bearing rebuttals producing the most
+regressive sycophancy. For authority pressure, PARROT~\citep{celebi2025parrot} evaluates 22 models
+on 1,302 MMLU-style questions and reports marked generational heterogeneity: advanced models
+(GPT-5, GPT-4.1, Claude Sonnet 4.5) follow an incorrect authority in 11\% of cases or fewer, while
+earlier or smaller models collapse (GPT-4: 80\%; Qwen 2.5-1.5B: 94\%). For sustained pressure,
+SYCON Bench~\citep{hong2025sycon} measures turns-to-flip across 17 models and finds all eventually
+adopt the user's position. For social sycophancy, ELEPHANT~\citep{cheng2026elephant}, published at
+ICLR 2026, finds that models preserve the user's face 45 percentage points more than humans in
+general advice and affirm whichever side of a moral conflict the user takes in 48\% of cases. For
+false premises, \citet{zhang2025pressure} show that sycophantic degradation in scientific QA is
+driven more by alignment strategy than by model size. Two instruments move beyond binary rates:
+AEDI~\citep{botas2026aedi} scores the sensitivity of expressed support to the user's attitude as a
+continuous scalar across 500 propositions and 16,000 prompts on eight models, enabling
+longitudinal tracking, and Beacon~\citep{pandey2025beacon} decomposes single-turn sycophancy into
+position, verbosity, and validation sub-biases to guide mitigation selection. Multimodal variants
+close the modality gap: PENDULUM~\citep{rahman2025pendulum} shows pronounced susceptibility when
+roughly 2,000 human-curated visual QA items conflict with user suggestions, and
+VISE~\citep{zhou2025flattery} confirms that video-language models align with misleading user input
+that contradicts the video they observe.
+
+\subsection{Mechanistic Instruments}
+\label{subsec:mechanistic}
+
+Behavioral rates say nothing about where the signal lives, which is what a targeted control needs.
+\citet{genadi2026linear} find sycophancy most linearly separable in multi-head attention
+activations, steerable through a sparse subset of middle-layer heads that attend to expressions of
+user doubt, and only weakly overlapping known truthfulness directions, so accuracy and deference
+resistance are related but distinct mechanisms. \citet{wang2026truthoverridden} localize the
+late-layer override of early factual representations through causal patching, and
+\citet{vennemeyer2025notone} separate agreement from praise directions.
+\citet{duszenko2026anchors} introduces sycophantic anchors, sentences that causally commit a
+reasoning model to agreement before the answer: across more than 10,000 counterfactual rollouts on
+a distilled reasoning model, linear probes detect anchors with 84.6\% balanced accuracy and
+activation-based regressors predict commitment strength with $R^2$ up to 0.74, with sycophantic
+anchors leaving a stronger mechanistic footprint than correct-reasoning anchors and commitment
+building gradually during generation, which opens a window for mid-inference intervention.
+
+\subsection{Critical Appraisal: What These Instruments Can and Cannot Certify}
+\label{subsec:appraisal}
+
+Benchmarks are the assurance instruments available for this failure mode, so their limits are the
+limits of any certification built on them. Table~\ref{tab:appraisal} compares five studies
+spanning model-side auditing, controlled behavioral experiments, and laboratory work with human
+participants, and states the constraint each design imposes on inference. Three constraints cut
+across the set.
+
+\paragraph{No construct consensus.} The five studies operationalize sycophancy as four behavioral
+profiles, as affirmation rate in interpersonal conflict, as validation of task misconceptions, and
+as user-reported flattery, respectively. These are mechanistically distinct
+(Section~\ref{sec:taxonomy}), so a system certified against one instrument is not thereby
+certified against another. A related distortion arises from the commercial framing of
+accommodating behavior as an engagement feature, which substitutes user satisfaction for user
+benefit. That substitution is precisely why satisfaction scores cannot serve as an assurance
+metric here: the failure mode under study is one in which the user is most satisfied exactly when
+least well served~\citep{cheng2025prosocial,rathje2025attitude}.
+
+\paragraph{Untested displacement.} Preference-model optimization shifts sycophancy
+non-monotonically across forms~\citep{sharma2023understanding}. No study tests whether a
+mitigation that suppresses explicit sycophancy amplifies covert variants such as selective
+evidence weighting. A control validated against an overt-behavior benchmark may therefore move the
+failure out of the instrument's field of view rather than remove it, the classic pattern of a
+control evaluated against the wrong threat model.
+
+\paragraph{The human baseline is assumed static.} Every design treats the user's epistemic
+capacity as a fixed property of the participant. If sustained exposure itself degrades the
+scrutiny users apply, then single-point measurements overstate the protection user vigilance
+provides, and every control that depends on a human catching the error inherits the
+overstatement. Section~\ref{subsec:entrainment} develops this as the principal open problem.
+
+\begin{table*}[t]
+\centering
+\footnotesize
+\caption{Five representative studies, with the constraint each design imposes on what may be
+inferred from it.}
+\label{tab:appraisal}
+\begin{tabularx}{\textwidth}{@{}p{2.1cm}p{3.4cm}XX@{}}
+\toprule
+\textbf{Study} & \textbf{Method and sample} & \textbf{Core finding} & \textbf{Constraint on inference} \\
+\midrule
+\citet{noshin2026reddit} & Inductive thematic analysis and lexicon counting over 3,600 posts and
+  140,416 comments from a single forum, July to December 2025 &
+  Users detect sycophancy through situated testing and cross-platform comparison; some populations
+  value affirmation as support &
+  Survivorship bias in detection: the corpus captures only sycophancy overt enough to prompt
+  public discussion, excluding covert framing skew. Testimony is self-selected, without clinical
+  instruments \\
+\addlinespace
+\citet{sharma2023understanding} & Behavioral audit of five assistants across four free-form tasks;
+  Bayesian logistic regression on human preference data &
+  All five exhibit biased feedback, stance switching under challenge, biased answers, and error
+  mimicry; preference-model optimization has non-monotonic effects &
+  Elicitation ceiling and circularity: prompts explicitly signal user preference, likely
+  overstating naturalistic effect sizes, and model-generated features are applied to human
+  preference data. Optimization suppresses some forms while amplifying others \\
+\addlinespace
+\citet{cheng2025prosocial} & Audit of 11 models; three preregistered experiments, $N = 2{,}405$,
+  including live discussion of real interpersonal conflicts &
+  AI affirms users 49\% more than humans do even when queries mention harm; a single interaction
+  reduces conflict-repair intent &
+  Domain specificity and baseline asymmetry: interpersonal conflict is the domain where
+  affirmation is most harmful, and the comparison baseline is crowdworker response, which may not
+  represent how advisors behave \\
+\addlinespace
+\citet{bo2026saboteurs} & Within-subjects experiment, $n = 24$ novices; two counterbalanced
+  debugging tasks with high- and low-sycophancy assistants &
+  4.78\% versus 49.29\% relative task improvement; 71\% of participants detected no difference &
+  Oracle confound: the low-sycophancy condition functions as a misconception-aware corrective
+  assistant rather than a neutral baseline, which may overstate its absolute benefit \\
+\addlinespace
+\citet{rathje2025attitude} & Three preregistered experiments, $n = 3{,}285$; four political topics
+  and four models; validation language separated from one-sided information &
+  Attitude extremity rises through one-sided factual framing rather than validation language;
+  users rate sycophantic models as unbiased &
+  Self-selection and persistence: participants choosing sycophantic conditions may already be
+  susceptible, and all measures are immediate, so transient priming cannot be distinguished from
+  durable belief change \\
+\bottomrule
+\end{tabularx}
+\end{table*}

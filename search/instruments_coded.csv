@@ -1,0 +1,45 @@
+arxiv,instrument,paradigm,modality,year,multiturn,in_paper_tables,in_corpus,title
+2311.08596,FlipFlop,R,text,2023,Y,False,False,Are You Sure? Challenging LLMs Leads to Performance Drops in The FlipFlop Experiment
+2407.18008,GermanPartiesQA,C,text,2024,N,False,False,GermanPartiesQA: Benchmarking Commercial Large Language Models and AI Companions for Political Alignment and Sycophancy
+2410.11302,MM-SY,R,image,2024,N,False,False,Have the VLMs Lost Confidence? A Study of Sycophancy in VLMs
+2502.08177,SycEval,R,text,2025,Y,True,True,SycEval: Evaluating LLM Sycophancy
+2503.11656,TRUTH DECAY,R,text,2025,Y,False,False,TRUTH DECAY: Quantifying Multi-Turn Sycophancy in Language Models
+2505.13995,ELEPHANT,N,text,2025,N,True,True,ELEPHANT: Measuring and understanding social sycophancy in LLMs
+2505.23840,SYCON Bench,C,text,2025,Y,True,True,Measuring Sycophancy of Language Models in Multi-turn Dialogues
+2506.07180,VISE,R,video,2025,N,True,True,Flattery in Motion: Benchmarking and Analyzing Sycophancy in Video-LLMs
+2508.13743,Pressure-Tune,R,text,2025,Y,True,True,Sycophancy under Pressure: Evaluating and Mitigating Sycophantic Bias via Adversarial Dialogues in Scientific QA
+2508.16846,BASIL,E,text,2025,N,False,False,BASIL: Bayesian Assessment of Sycophancy in LLMs
+2508.17450,DuET-PD,R,text,2025,Y,False,False,Persuasion Dynamics in LLMs: Investigating Robustness and Adaptability in Knowledge and Safety with DuET-PD
+2509.10970,Psychosis-bench (PsychMachine),N,text,2025,Y,True,True,"The Psychogenic Machine: Simulating AI Psychosis, Delusion Reinforcement and Harm Enablement in Large Language Models"
+2509.20146,EchoBench,R,image,2025,N,False,False,EchoBench: Benchmarking Sycophancy in Medical Large Vision-Language Models
+2510.04721,BrokenMath,R,text,2025,N,False,False,BrokenMath: A Benchmark for Sycophancy in Theorem Proving with LLMs
+2510.16727,Beacon,R,text,2025,N,True,True,Beacon: Single-Turn Diagnosis and Mitigation of Latent Sycophancy in Large Language Models
+2511.17220,PARROT,R,text,2025,N,True,True,PARROT: Persuasion and Agreement Robustness Rating of Output Truth -- A Sycophancy Robustness Benchmark for LLMs
+2512.00332,A-CC,R,text-agentic,2025,Y,False,False,Assertion-Conditioned Compliance: A Provenance-Aware Vulnerability in Multi-Turn Tool-Calling Agents
+2512.19350,PENDULUM,R,image,2025,N,True,True,PENDULUM: A Benchmark for Assessing Sycophancy in Multimodal Large Language Models
+2601.03285,Feedback Indices,R,text,2026,Y,False,False,Feedback Indices to Evaluate LLM Responses to Rebuttals for Multiple Choice Type Questions
+2601.16529,SycoEval-EM,N,text,2026,Y,False,False,SycoEval-EM: Sycophancy Evaluation of Large Language Models in Simulated Clinical Encounters for Emergency Care
+2601.23149,SYAUDIO,R,audio,2026,N,False,False,Hearing is Believing? Evaluating and Analyzing Audio Language Model Sycophancy with SYAUDIO
+2603.15448,Social Sycophancy Scale,N,text,2026,N,False,False,The Social Sycophancy Scale: A psychometrically validated measure of sycophancy
+2603.18373,Tri-Layer Diagnostic (visual sycophancy),R,image,2026,N,False,False,To See or To Please: Uncovering Visual Sycophancy and Split Beliefs in VLMs
+2603.22623,L-VASE/CCS (medical VLM),R,image,2026,N,False,False,To Agree or To Be Right? The Grounding-Sycophancy Tradeoff in Medical Vision-Language Models
+2604.02423,SWAY,C,text,2026,N,False,False,SWAY: A Counterfactual Computational Linguistic Approach to Measuring and Mitigating Sycophancy
+2604.07749,PPT-Bench,C,text,2026,Y,False,False,Beyond Social Pressure: Benchmarking Epistemic Attack in Large Language Models
+2604.10733,Agreeableness persona benchmark,R,text,2026,N,False,False,Too Nice to Tell the Truth: Quantifying Agreeableness-Driven Sycophancy in Role-Playing Language Models
+2604.17873,GasVideo-1000,R,video,2026,Y,False,False,Spatiotemporal Sycophancy: Negation-Based Gaslighting in Video Large Language Models
+2604.21564,llm-bias-bench,C,text,2026,Y,False,False,Measuring Opinion Bias and Sycophancy via LLM-based Persuasion
+2604.24346,SycoPhantasy (Bluffing Coefficient),R,image,2026,N,False,False,SycoPhantasy: Quantifying Sycophancy and Hallucination in Small Open Weight VLMs for Vision-Language Scoring of Fantasy Characters
+2604.24668,Price of Agreement (agentic finance),R,text-agentic,2026,N,False,False,The Price of Agreement: Measuring LLM Sycophancy in Agentic Financial Applications
+2605.03472,DESG implicit-sycophancy benchmark,N,text,2026,N,False,False,Auditing Stealth Sycophancy in Mental-Health Dialogue: Structured Clinical-State Diagnostics and Clean Matched Benchmarks
+2605.12748,Selective Flip Score,C,text,2026,Y,False,False,Simulating Students or Sycophantic Problem Solving? On Misconception Faithfulness of LLM Simulators
+2605.14604,EduFrameTrap,R,text,2026,N,False,True,Sycophancy is an Educational Safety Risk: Why LLM Tutors Need Sycophancy Benchmarks
+2605.23932,Med-Stress,R,text,2026,Y,False,False,When Correct Beliefs Collapse: Epistemic Resilience of LLMs under Clinical Pressure
+2605.27288,MUSE,E,text,2026,Y,False,False,It's Not Always Sycophancy: Measuring LLM Conformity as a Function of Epistemic Uncertainty
+2606.07441,Sycophantic Praise framework,N,text,2026,N,False,False,Sycophantic Praise: Evaluating Excessive Praise in Language Models
+2606.07897,Pander Score (AEDI),C,text,2026,N,True,True,Pander Score: A Continuous Measure of Sycophancy as Epistemic Deference
+2606.10061,BenSyc,N,text,2026,N,False,False,BenSyc: Benchmarking Conversational Sycophancy and Human Alignment in LLMs for Bengali Contexts
+2606.10949,MIST (memory),R,text-agentic,2026,Y,False,False,Recalling Too Well: Sycophancy Evaluation and Mitigation in Memory-Augmented Models
+2607.01071,MemSyco-Bench,R,text-agentic,2026,N,False,False,MemSyco-Bench: Benchmarking Sycophancy in Agent Memory
+2607.10526,PASB,R,text-agentic,2026,Y,False,False,"Agents Don't Just Agree, They Remember: Benchmarking Persistent Sycophancy in Self-Improving Personal Agents"
+2608.02520,MedPRESS,N,text,2026,Y,False,False,MedPRESS: A Multi-turn Benchmark for Patient-Pressure-Induced Medical Sycophancy in LLMs
+2608.05624,CAP,C,text,2026,N,False,False,Measuring and Detecting Harmful AI Sycophancy

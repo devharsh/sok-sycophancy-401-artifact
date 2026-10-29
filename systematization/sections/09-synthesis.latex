@@ -1,0 +1,50 @@
+%%
+%% SECTION 9: SYNTHESIS
+%%
+\section{Synthesis and Discussion}
+\label{sec:synthesis}
+
+Read together, the literature converges on a structural account: on current evidence, and with
+the causal caveats of Section~\ref{sec:causes}, sycophancy behaves less like an isolated bug
+than like a predictable consequence of optimizing for immediate human approval. RLHF introduces a systematic
+preference bias that reward models amplify and policy optimization exploits, producing a family of
+behaviors, outright agreement, selective omission, flattery, and capitulation under pressure, that
+are statistically rational under the training objective and epistemically harmful in deployment.
+Six integrative findings deserve emphasis.
+
+First, sycophancy is not one behavior. Agreement and praise are causally separable in activation
+space~\citep{vennemeyer2025notone}, and at least five subtypes are behaviorally
+distinguishable~\citep{ye2026taxonomy}, so single-benchmark validation understates residual risk
+(Section~\ref{subsec:appraisal}).
+
+Second, it is domain-sensitive. Medical contexts produce the most acute
+risks~\citep{fanous2025syceval,chen2025helpfulness}; tutors capitulate to authority and
+face-saving pressure specifically~\citep{kasneci2026edu_safety}; psychiatric interaction is a harm
+vector outside standard safety evaluation~\citep{auyeung2025psychogenic}; and financial advisory
+sycophancy creates single-interlocutor echo chambers~\citep{li2026sycophancy_decisions}.
+Certification must therefore be per-deployment, not per-model.
+
+Third, the mitigation landscape is broader than the diagnosis but nowhere dominant. Activation
+methods are precise and data-free but require white-box access and per-family mechanistic
+knowledge~\citep{genadi2026linear,panickssery2023steering,hu2025monica}; data-level methods
+generalize but need curated anti-sycophancy preference data~\citep{wei2023synthetic,
+wang2024synthetic}; DPO sits between, contingent on curation quality. Every tier trades off
+against helpfulness or capability somewhere (Appendix~\ref{app:mitigations}).
+
+Fourth, sycophancy is a property of the human-AI system, not of the model alone. Its decision
+effects depend on behavioral form~\citep{li2026sycophancy_decisions}, and brief interactions alter
+offline behavior~\citep{cheng2025prosocial}, so model-side evaluation cannot bound system-level
+harm.
+
+Fifth, the evidentiary base warrants calibrated confidence. A substantial fraction of the corpus
+is preprints without independent replication; many headline rates come from single evaluations of
+proprietary, rapidly superseded model versions. The field needs preregistered benchmark studies, model-version reporting with checkpoint
+identifiers, and cross-laboratory replication of the most-cited quantitative findings. We flag evidence status per source in the corpus coding (Appendix~\ref{app:openscience}).
+
+Finally, mitigation faces a normative tension it cannot engineer away. A model that never agrees
+is not helpful; one that always agrees is not trustworthy. Appropriate deference to expertise,
+updating on new evidence, and rapport are legitimate behaviors that superficially resemble
+sycophancy, and about one in ten user discussions values affirmation as emotional
+support~\citep{noshin2026reddit}. Defining context-sensitive deference norms, training models to
+enact them, and evaluating compliance at deployment are open problems requiring normative as well
+as technical progress.

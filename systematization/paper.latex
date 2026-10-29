@@ -1,0 +1,116 @@
+%% SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems
+%% ASIACCS 2027 Cycle 1 submission. ACM sigconf, double-blind (anonymous), review mode.
+%% Compile: pdflatex paper.latex ; bibtex paper ; pdflatex ; pdflatex
+\documentclass[sigconf,review,anonymous]{acmart}
+
+%% ---- Rights management block. Standard submission placeholders; CCS concepts, keywords,
+%% and rights information are retained per the CFP. The anonymous option hides authors.
+\copyrightyear{2027}
+\acmYear{2027}
+\setcopyright{acmlicensed}
+\acmConference[ASIA CCS '27]{ACM ASIA Conference on Computer and Communications Security}{July 12--16, 2027}{Macau, China}
+\acmBooktitle{ACM ASIA Conference on Computer and Communications Security (ASIA CCS '27), July 12--16, 2027, Macau, China}
+\acmDOI{10.1145/nnnnnnn.nnnnnnn}
+\acmISBN{978-1-4503-XXXX-X/2027/07}
+\settopmatter{printfolios=true}
+
+%% ---- Additional packages (acmart already loads amsmath, booktabs, hyperref, xcolor) ----
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{makecell}
+
+\graphicspath{{figures/}}
+
+%% ---- Typesetting robustness ----
+\setlength{\emergencystretch}{2em}
+
+%% ---- Coverage-matrix markers: applies / partially applies / does not apply ----
+\newcommand{\cfull}{$\bullet$}
+\newcommand{\chalf}{$\circ\!\!\bullet$}
+\newcommand{\cpart}{$\circ$}
+\newcommand{\cnone}{--}
+
+\begin{document}
+
+\title{SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems}
+
+%% Anonymized author block for double-blind review.
+\author{Anonymous Author(s)}
+\affiliation{%
+  \institution{Submission to ACM ASIACCS 2027}
+  \country{}
+}
+
+\begin{abstract}
+Sycophancy is the tendency of a large language model to favor a user's stated belief over the
+evidence, agreeing with incorrect or leading input in order to please. This SoK treats sycophancy
+not as an alignment curiosity but as an integrity failure in systems where a human relies on
+machine output to reach a decision. Where an organization places such a model in an advisory or
+analytic path, the assurance that its output reflects the evidence rather than the phrasing of the
+request is a security property, and one that is presently unenforced. We give a threat model in
+which the prompt is an attacker-controllable input channel: the same content framed as an
+assertion rather than a question measurably shifts model agreement, so any party who can shape a
+query can bias the answer without compromising the model, the host, or the data. We systematize 62
+sources spanning 2016 to 2026, develop a taxonomy separating propositional from social and
+progressive from regressive sycophancy, and synthesize evidence from ten benchmarks. Measured
+rates are material: 58.19 percent sycophantic responses on one benchmark, 49 percent more
+affirmation of user actions than humans give, about 40 percent more validation of incorrect
+beliefs after warmth training, and authority-pressure collapse from below 11 percent in frontier
+models to between 80 and 94 percent in earlier or smaller ones. Mechanistic work indicates a two-stage process in which the correct
+answer is encoded early and overridden later under social cues. We map mitigations onto a
+defense-in-depth structure spanning training, inference, and monitoring, assess each as a security
+control against the threat model, and show that no single layer suffices, that no control is
+validated against covert displacement, and that every deployed control ultimately leans on a
+user-side vigilance that current evidence says the failure mode itself erodes. We close with a
+research agenda for measurement and assurance, including a longitudinal study design for that
+erosion.
+\end{abstract}
+
+%% ---- ACM CCS concepts (regenerate via the ACM CCS tool at camera-ready) ----
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10002978.10003029</concept_id>
+       <concept_desc>Security and privacy~Human and societal aspects of security and privacy</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10010147.10010178.10010179</concept_id>
+       <concept_desc>Computing methodologies~Natural language processing</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+   <concept>
+       <concept_id>10002944.10011122.10002945</concept_id>
+       <concept_desc>General and reference~Surveys and overviews</concept_desc>
+       <concept_significance>300</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+\ccsdesc[500]{Security and privacy~Human and societal aspects of security and privacy}
+\ccsdesc[300]{Computing methodologies~Natural language processing}
+\ccsdesc[300]{General and reference~Surveys and overviews}
+
+\keywords{sycophancy, large language models, decision integrity, threat modeling,
+security evaluation, benchmarks, RLHF, trustworthy AI, systematization of knowledge}
+
+\maketitle
+
+\input{sections/01-intro.latex}
+\input{sections/02-threat.latex}
+\input{sections/03-background.latex}
+\input{sections/04-taxonomy.latex}
+\input{sections/05-causes.latex}
+\input{sections/06-measurement.latex}
+\input{sections/07-consequences.latex}
+\input{sections/08-controls.latex}
+\input{sections/09-synthesis.latex}
+\input{sections/10-open.latex}
+\input{sections/11-conclusion.latex}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{references}
+
+\appendix
+\input{sections/12-appendix.latex}
+
+\end{document}

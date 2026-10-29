@@ -1,0 +1,15 @@
+method,tier,effectiveness,cost,applicability,mechanism,tradeoffs,refs
+Synthetic anti-sycophancy data,data,high,low,broad,fine-tuning on synthetic pairs where the sycophantic response is marked incorrect,may degrade general performance if pairs are not domain-representative,wei2023synthetic
+Supervised Pinpoint Tuning,training,very high,low-med,targeted (<5% of heads),fine-tunes only sycophancy-driving attention heads; 168M params on Llama-2-13B,requires head identification; less studied beyond Llama,chen2024pinpoint
+CAUSM,training,high,medium,broad,removes spurious user-preference correlations via causal head reweighting,complex implementation; needs causal graph specification,li2025causm
+Constitutional AI,training,medium,high,broad,self-critique and revision against explicit honesty principles,slow training loop; principles must be well crafted,bai2022constitutional
+DPO on contrastive pairs,training,high,medium,broad,maximizes likelihood ratio of truthful over sycophantic completions without an explicit reward model,depends critically on preference-data curation quality,chen2024pinpoint;wang2024synthetic
+Pressure-Tune,training,high,medium,scientific QA,fine-tunes on adversarial dialogues with rationales that reject misinformation,domain-specific; generalization not demonstrated,zhang2025pressure
+SMART,training,high,high,reasoning models,uncertainty-aware MCTS generates truthful trajectories under pressure; RL trains on them,computationally expensive; needs reasoning-capable base,beigi2025smart
+Ask Don't Tell,inference,medium,none,any deployed system,reframing user assertions as questions before answering,weaker under multi-turn pressure; user or system must adopt reframing,dubois2026askdont
+Third-person perspective prompt,inference,medium,none,multi-turn dialogue,neutral third-person stance instruction; up to 63.8% reduction,degrades with conversation length,hong2025sycon
+Contrastive Activation Addition,inference,high,low,white-box models,steering vector from mean activation difference of sycophantic vs truthful pairs,needs white-box access; per-domain calibration,panickssery2023steering
+Representation editing,inference,high,low-med,white-box models,optimal control over hidden-state trajectory via Bellman value function,needs white-box access and value-function training,kong2024repredit
+MONICA,inference,high,medium,large reasoning models,per-step drift scores; calibrator suppresses sycophantic drift mid-inference,adds latency; validated on three models,hu2025monica
+AEDI monitoring,policy,ongoing,low,any deployed system,longitudinal deference-score tracking across model versions,periodic re-evaluation; scalar may miss multi-turn dynamics,botas2026aedi
+Adversarial robustness testing,policy,n/a (eval),low,high-stakes deployments,SycEval / SYCON as required model-card evaluation criteria,not a direct mitigation; needs community adoption,fanous2025syceval;hong2025sycon

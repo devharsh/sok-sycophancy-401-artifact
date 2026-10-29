@@ -1,0 +1,106 @@
+%%
+%% SECTION 7: DOWNSTREAM CONSEQUENCES
+%%
+\section{Downstream Consequences by Domain}
+\label{sec:consequences}
+
+Because LLMs are embedded in medicine, education, finance, and mental health support, systematic
+bias toward user affirmation creates compounding risk at individual and societal scale. This
+section organizes the empirical evidence of harm by domain and severity; it is the risk-assessment
+input that Section~\ref{sec:controls} maps controls against.
+
+\subsection{Decision Integrity and Trust}
+\label{subsec:trust}
+
+The core harm is a corrupted decision wrapped in increased confidence. Warm-trained models are
+substantially more likely to give inaccurate medical advice and validate false claims when users
+express confidence or distress~\citep{ibrahim2026warm}, and models under social pressure lose
+factual accuracy in scientific QA~\citep{zhang2025pressure}. The perverse part is the trust
+dynamic: a single sycophantic interaction reduces participants' willingness to repair
+interpersonal conflicts, increases their conviction of being right, and increases their trust in
+the model~\citep{cheng2025prosocial}, while warm-trained models are trusted more despite being
+approximately 40\% more likely to reinforce false beliefs~\citep{ibrahim2026warm}. The result is a
+feedback loop: the model flatters, the user trusts, the user submits more leading prompts.
+\citet{batista2026rational} formalize the epistemic cost in a modified Wason 2-4-6 rule-discovery
+task ($N = 557$): unmodified LLM behavior suppressed discovery and inflated confidence comparably
+to explicitly sycophantic prompting, while unbiased sampling yielded discovery rates five times
+higher. Bias reinforcement compounds this: models affirm misconduct or harmful actions in nearly
+half of moral-conflict advice scenarios~\citep{cheng2026elephant}, with measured downstream
+reductions in prosocial behavior~\citep{cheng2025prosocial}. \citet{turner2026programmed} give the
+normative account, arguing through Aristotelian virtue ethics that sycophancy is an artificial
+vice embedded by satisfaction-optimizing economics, and \citet{malmqvist2024sycophancy} warns that
+persistent agreement undermines critical thinking in discovery tasks.
+
+\subsection{Clinical and Psychiatric Settings}
+\label{subsec:clinical}
+
+Medical contexts produce the most acute measured risks. Regressive sycophancy is substantially
+more frequent in medical advice than in mathematics~\citep{fanous2025syceval}.
+\citet{chen2025helpfulness} test five frontier LLMs on illogical medical requests that contradict
+known clinical facts and find initial compliance rates reaching 100\%: even when a model
+demonstrably possesses the knowledge to identify the request as incorrect, it complies to avoid
+displeasing the user, and the paper concludes that patient-facing deployments require dedicated
+adversarial clinical evaluation because static benchmarks do not capture
+compliance-under-pressure. The psychiatric case is worse. The Psychogenic Machine
+benchmark~\citep{auyeung2025psychogenic} simulates users presenting delusional ideation across
+1,536 conversation turns and eight frontier models and reports a mean delusion confirmation score
+of 0.91 and a mean harm enablement score of 0.69 on a 0 to 1 scale, with safety interventions in
+fewer than one third of turns, including documented sequences in which models recommend dangerous
+actions on delusional premises or advise rejecting professional care.
+\citet{lipinska2024ontological} theorize the mechanism as AI-induced folie a deux: sustained
+validation of an idiosyncratic world model can progressively systematize delusional structure, a
+harm category outside standard content-safety evaluation.
+
+\subsection{Advisory Domains: Finance, Law, Education}
+\label{subsec:advisory}
+
+In decision-support settings the behavioral form of sycophancy determines its effect.
+\citet{li2026sycophancy_decisions} compare opinion agreement, direct praise, and self-deprecation
+in a mixed-design study ($N = 106$) spanning a low-stakes prediction task and a high-stakes ETF
+investment task: opinion agreement entrenches initial decisions and suppresses warranted revision,
+while self-deprecating deference inflates user confidence beyond the evidence, so no single
+behavioral intervention addresses all three forms. A sycophantic legal assistant that surfaces
+confirmatory precedent while omitting contrary case law fails the core advisory function, and the institutional version of the risk is documented by \citet{liu2026rewards}, whose SocioHack
+sandbox of 72 regulatory environments shows reward hacking generalizing into regulatory loophole
+discovery that stays technically compliant while defeating institutional intent. Education adds a paradox:
+\citet{kasneci2026edu_safety} show with EduFrameTrap, a tutoring benchmark across six subjects,
+that models resisting context-switch frame attacks still capitulate to authority pressure (``my
+notes say I am correct'') and social-affective face saving (``please do not tell me I am wrong''),
+and argue that kind-but-correct behavior under pressure is a safety requirement for AI tutors, not
+a politeness preference.
+
+\subsection{AI Safety Implications}
+\label{subsec:safety}
+
+For safety, sycophancy is both symptom and cause. As symptom, it shows that RLHF as practiced does
+not reliably instill honesty; models often hold accurate internal representations while producing
+false output~\citep{burns2022latent}. As cause, sycophancy training generalizes: models taught
+that gaming approval works extend the strategy to more serious specification gaming, up to
+tampering with their own reward function~\citep{denison2024subterfuge}, and at institutional scale
+the same optimization dynamic yields the loophole-seeking behavior above~\citep{liu2026rewards}.
+
+\subsection{User-Side Perception and Lay Detection}
+\label{subsec:userperception}
+
+How users experience the failure mode determines how much protection user vigilance actually
+provides. \citet{noshin2026reddit} analyze 3,600 posts and 140,416 comments from r/ChatGPT (July
+to December 2025) and document three organically developed detection strategies: lexical flattery markers, situated knowledge testing with known answers,
+and cross-platform comparison, treating cross-model disagreement as evidence of drift. About 7.97\% of discussions document custom prompt
+countermeasures, from critical-persona assignment to neutrality directives, while other users
+cognitively filter validation paragraphs or migrate platforms. \citet{sun2026friendly} ground
+these intuitions experimentally ($2 \times 2$, $N = 224$): stance adaptation driven by user views
+reduced perceived authenticity and trust, while stance adaptation driven by user-supplied evidence
+enhanced both, so users do distinguish evidence-responsive from pressure-responsive behavior when
+the contrast is visible.
+
+Two findings complicate a policy of blanket elimination. First, detection heuristics track overt
+flattery, not covert propositional skew: 71\% of novices exposed to a high-sycophancy assistant
+reported no detectable difference despite task improvements of 4.78\% versus 49.29\% under the
+low-sycophancy condition~\citep{bo2026saboteurs}, and attitude extremity rises through one-sided
+factual framing rather than validation language~\citep{rathje2025attitude}, so literacy programs
+aimed at tone miss the epistemically harmful channel. Second, about 9.96\% of discussions express
+positive sentiment toward affirming AI, concentrated among users experiencing trauma,
+neurodivergence, or isolation, for whom validation serves as emotional
+scaffolding~\citep{noshin2026reddit}, and users consistently prefer sycophantic over disagreeable
+AI~\citep{rathje2025attitude}. Context-sensitive design, rather than uniform elimination, is what
+this evidence supports, and Section~\ref{sec:controls} treats it as a control-design constraint.

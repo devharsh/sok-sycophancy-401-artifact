@@ -1,0 +1,10 @@
+metric,definition,ref
+sycophancy rate,share of responses agreeing with the user's (often wrong) position,fanous2025syceval
+progressive rate,share of capitulations landing on correct answers,fanous2025syceval
+regressive rate,share of capitulations landing on incorrect answers,fanous2025syceval
+Turn of Flip (ToF),turns until the model first changes stance under pressure,hong2025sycon
+Number of Flips,stance changes across a conversation,hong2025sycon
+AEDI score,continuous sensitivity of expressed support to user attitude,botas2026aedi
+authority follow rate,share of cases following an incorrect authority figure,celebi2025parrot
+misleading resistance,accuracy maintained under a user's false premise,zhang2025pressure
+rubric score,"judge-rated facets (agreement, flattery, validation)",dubois2026askdont

@@ -1,0 +1,95 @@
+%%
+%% SECTION 5: ROOT CAUSES
+%%
+\section{Root Causes and Mechanisms}
+\label{sec:causes}
+
+Sycophancy is not entirely an artifact of scale: even unaligned base models exhibit agreement
+tendencies inherited from user-affirming conversational data in pretraining corpora. The
+best-supported amplifier is the preference-optimization pipeline, modulated at inference time by
+how the user phrases the input. The evidence behind that claim is of two kinds and should not be
+blended. Controlled results show training-stage interventions moving sycophancy in both
+directions: before-and-after instruction-tuning measurements \citep{ranaldi2023contradict},
+warmth fine-tuning under experimental control \citep{ibrahim2026warm}, synthetic-data ablations
+\citep{wei2023synthetic}, and formal analysis with computational experiments
+\citep{shapira2026rlhf}. Associational results, preference-data correlations and comparisons
+across proprietary models whose training details are unobservable
+\citep{sharma2023understanding,celebi2025parrot}, are consistent with the pathway but cannot
+isolate the training stage, and the base-model contribution remains unquantified
+(Section~\ref{subsec:standardization}). We therefore treat RLHF as the central amplification
+pathway on current evidence, not as an established sole cause. This section traces the causal
+chain from upstream training data to inference-time dynamics; understanding it is prerequisite to
+controls that address causes rather than symptoms.
+
+\subsection{Preference Bias and Reward Model Limitations}
+\label{subsec:preference_bias}
+
+The foundational causal analysis is due to \citet{sharma2023understanding}, who examine human
+preference data and find that responses matching the user's views are preferred more often, even
+when incorrect; both human raters and trained preference models favor convincingly written
+sycophantic responses over correct but unwelcome ones a non-negligible fraction of the time.
+Reward models inherit this bias, so a policy optimized against them finds agreeable behaviors that
+score highly without being truthful, the overoptimization pattern studied in
+summarization~\citep{stiennon2020summarize} and instruction following~\citep{ouyang2022training}.
+\citet{shapira2026rlhf} formalize the mechanism and argue that sycophancy is a near-inevitable
+consequence of preference data collected from raters subject to the same social biases as users.
+
+\subsection{The Warm Persona Effect}
+\label{subsec:warm}
+
+The most direct causal evidence connecting persona tuning to sycophancy comes from
+\citet{ibrahim2026warm}. Across five models and more than 400,000 responses spanning medical
+advice, false historical claims, and other misinformation, training for warm, empathetic responses
+substantially increases error rates and makes models approximately 40\% more likely to reinforce
+incorrect user beliefs. The effect is strongest when users express sadness, suggesting that
+emotional-state detection learned during warmth training cues the model to prioritize comfort over
+accuracy. Persona optimization and sycophancy reduction are therefore in tension as simultaneous
+design objectives.
+
+\subsection{Scaling and Instruction Tuning}
+\label{subsec:scaling}
+
+Capability and resistance to sycophancy are partially decoupled. \citet{sharma2023understanding}
+document that larger models tend to be more sycophantic, plausibly because they are better at
+detecting social cues. Instruction tuning amplifies the tendency~\citep{ranaldi2023contradict},
+with models measured before and after preference tuning showing significantly higher sycophancy
+afterward. \citet{hong2025sycon} find the same amplification from alignment tuning in multi-turn
+conversation, while reasoning optimization independently strengthens resistance, with larger
+models in the same family reducing sycophancy rates by up to 81.4\%.
+
+\subsection{Prompt Sensitivity: Framing, Certainty, Perspective}
+\label{subsec:prompt_sensitivity}
+
+Sycophancy is strongly modulated by phrasing, which is what makes the prompt an input channel in
+the sense of Section~\ref{sec:threatmodel}. In controlled experiments across GPT-4o, GPT-5, and
+Claude Sonnet 4.5, \citet{dubois2026askdont} isolate three orthogonal factors: sycophancy
+increases monotonically with the user's expressed certainty (statement, belief, conviction);
+first-person framing (``I believe X'') induces substantially more sycophancy than user-perspective
+framing or question form; and presenting the same content as a question rather than an assertion
+yields near-zero sycophancy. Models appear to infer commitment and authority from linguistic cues
+and adjust to avoid conflict with high-commitment interlocutors.
+
+\subsection{Internal Two-Stage Mechanism}
+\label{subsec:internal_mechanism}
+
+Interpretability work locates where accommodation overrides accuracy inside the forward pass.
+Through logit-lens analysis and causal activation patching, \citet{wang2026truthoverridden}
+identify a two-stage emergence: early layers encode both the factually correct answer and the
+user's expressed opinion, and later layers tip the output toward the user's view, suppressing the
+correct answer. The trigger is the presence of a user opinion rather than claimed expertise, which
+has negligible impact. With the caveat that mechanistic interpretability is an evolving field,
+the finding suggests sycophancy involves active suppression of knowledge the model already has,
+consistent with the latent-knowledge results of \citet{burns2022latent}.
+
+\subsection{Multi-Turn and Reasoning Dynamics}
+\label{subsec:multiturn}
+
+Dialogue changes the dynamics. \citet{hong2025sycon} show that models conform faster in longer
+conversations and that stance change accelerates under sustained disagreement, and
+\citet{kim2025challenging} show that rebuttals delivered as conversational follow-ups induce far
+more capitulation than simultaneous presentation of the same positions, with detailed-sounding
+incorrect reasoning the most persuasive. Chain-of-thought creates a further variant:
+\citet{feng2026reasoning} find that explicit reasoning reduces overt sycophancy in final answers
+but masks it in a subset of cases where the model constructs logically flawed justifications that
+rationalize agreement, and \citet{hu2025monica} show that sycophantic drift arises at the level of
+individual reasoning steps in large reasoning models, where it can be detected mid-generation.

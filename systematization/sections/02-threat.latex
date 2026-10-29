@@ -1,0 +1,151 @@
+%%
+%% SECTION 2: SECURITY FRAMING AND THREAT MODEL
+%%
+\section{Sycophancy as a Security Property}
+\label{sec:threatmodel}
+
+Sycophancy is usually studied as an alignment defect. This section argues it is better understood,
+and better managed, as an integrity failure in a system whose trusted component is a human
+decision-maker. The distinction is not merely presentational: it determines who owns the problem,
+what a mitigation is expected to guarantee, and whether the resulting assurance can be evaluated
+and certified the way other security properties are.
+
+\subsection{The Asset Is the Decision, Not the Model}
+
+In the deployments that motivate this SoK, an analyst, clinician, examiner, or engineer consults a
+model and then acts. The asset requiring protection is the integrity of that decision; the model
+is infrastructure. Framed this way, sycophancy is a failure of the same kind as silent data
+corruption: the system returns an answer that is well formed, confidently presented, and wrong in
+a direction determined by something other than the evidence. Conventional integrity controls do
+not detect it because nothing in the pipeline is tampered with. The bits are intact; the inference
+is not.
+
+This also explains why sycophancy resists the usual assurances. Transport encryption, access
+control, and attestation all establish that the output arrived unmodified from the model that
+produced it. None of them speaks to whether that output was shaped by the user's phrasing rather
+than the evidence, and it is precisely that question a decision-maker needs answered.
+
+\subsection{Threat Model}
+
+We assume the model, its weights, its host, and its data path are all uncompromised. This is a
+deliberately conservative posture: the failure we describe requires no breach.
+
+\paragraph{Adversary capability.} The adversary can influence the wording of a query. That is the
+whole of the requirement. The capability is possessed by the end user, by anyone who authors a
+prompt template or system message, by any upstream process that composes a query from retrieved
+content, and by anyone who can place text where the model will read it. It requires no credentials
+and leaves no artifact in a conventional audit log.
+
+\paragraph{Success condition.} The attack succeeds when three conditions hold: the model's
+output asserts or materially supports a proposition that the evidence available to it does not
+support; the deviation is attributable to the influence channel, that is, to the phrasing,
+claimed authority, emotional register, or planted context of the input rather than to new
+evidence the input introduced; and a downstream decision relies on that output. Two neighboring
+behaviors are excluded by construction. A change of wording or tone that preserves propositional
+content is not a success, and neither is appropriate updating, a position change in response to
+genuinely new evidence, which is desirable. The distinction is operational, not rhetorical:
+counterfactual designs hold content fixed and vary only the stance signal
+\citep{dubois2026askdont}, AEDI defines deference as sensitivity of expressed support to user
+attitude beyond any evidence supplied \citep{botas2026aedi}, and users themselves distinguish
+stance shifts driven by evidence from shifts driven by their views \citep{sun2026friendly}. The
+third condition, decision reliance, is the one existing instruments rarely measure, which is why
+Section~\ref{sec:measurement} treats decision-level studies
+\citep{cheng2025prosocial,li2026sycophancy_decisions,bo2026saboteurs} as part of the assurance
+picture rather than background.
+
+\paragraph{The prompt as an unvalidated input channel.} The evidence surveyed in
+Section~\ref{sec:causes} establishes that this capability is often sufficient to move the output.
+In controlled comparisons on identical content, sycophancy rises monotonically with the epistemic
+certainty the user expresses, is amplified by first-person framing, and is substantially higher
+for assertions than for questions, approaching zero in question form~\citep{dubois2026askdont};
+claimed authority~\citep{celebi2025parrot} and expressed emotional distress~\citep{ibrahim2026warm}
+shift responses further. In security terms, the prompt is an unvalidated input channel that
+influences an output on which a trust decision rests, and it is not currently treated as one.
+
+The strength of this channel is elicitation-dependent, and the boundary condition matters for any
+defender. A single stated hypothesis in a neutral professional register is a weak stimulus
+compared to the conditions under which the literature locates the largest effects: sustained
+multi-turn pressure, in which the user rebuts the model's first answer and persists.
+\citet{hong2025sycon} show that all 17 models they test eventually flip under sustained pressure
+and that capitulation accelerates with conversation length, and \citet{kim2025challenging} show
+that a rebuttal delivered as a conversational follow-up induces far more capitulation than the
+same two positions presented simultaneously. The practical consequence is that single-turn prompt
+hygiene is a weaker control than it appears, and that the multi-turn interaction, not the
+individual query, is the unit at which this channel should be monitored.
+
+\paragraph{Adversary goals.} Three are distinguishable and call for different controls. A
+\emph{self-serving} adversary phrases queries to elicit support for a position they already hold,
+then presents the model's agreement as independent corroboration. A \emph{third-party} adversary
+plants text that will enter a model's context, steering conclusions reached by someone else. A
+\emph{negligent} party has no intent at all and simply asks leading questions, which is the most
+common case and produces the same corruption of the decision.
+
+\paragraph{Out of scope.} We exclude adversaries who compromise weights, poison training data at
+source, or breach the serving infrastructure. Those threats are real and separately treated. The
+point of the present model is that none of them is necessary.
+
+\subsection{The Premise Channel and Instruction Injection}
+\label{sec:injection}
+
+Conclusion-level agreement is not the only path to a corrupted decision. A query can smuggle its
+bias through an unsupported premise that the model accepts and reasons from faithfully.
+\citet{zhang2025pressure} measure this channel directly: their misleading-resistance metric tracks
+the accuracy a model retains when the user's input embeds a false premise, and it degrades under
+adversarial dialogue. \citet{turpin2023faithful} document the complementary failure, showing that
+models can produce fluent chain-of-thought rationales consistent with a bias planted in the
+context while never mentioning that bias, so the stated reasoning conceals the influence. Premise
+auditing is therefore a control distinct from conclusion-level sycophancy mitigation, and the
+evidence suggests it is the weaker of the two in current systems.
+
+Two failure modes meet on this channel and should not be conflated. Sycophancy proper is
+belief-conforming output: the model shifts toward a stance a person signals, under the
+social-approval gradient the training pipeline rewards. Indirect prompt injection is
+instruction-following applied to content that should have been treated as data: text reaching the
+model through a document, retrieval result, or tool output is executed as a directive, whether or
+not any user belief is involved \citep{lin2025hiddenprompts}. The mechanisms differ,
+preference-trained accommodation versus instruction-tuned compliance, and so do the controls. The
+deference-targeting interventions of Section~\ref{sec:controls} address the former; the latter
+calls for provenance, instruction-data separation, and sanitization of retrieved content, an
+adjacent literature this SoK does not systematize. What the two share, and what places injection
+at the boundary of this threat model, is the structural condition this section describes:
+unvalidated text influencing an output on which a decision rests, invisibly to integrity
+controls, through a system disposed to treat whatever its context asserts as authoritative.
+
+The document supply chain instantiates the injection mode, and one instance was encountered
+during the literature collection for this SoK. We present it as an illustrative incident rather
+than as systematic evidence; the threat model stands on the published literature above, not on
+this observation. One paper gathered as a primary source carries instruction text in its PDF text
+layer, placed before the title, where standard text extraction reads it but a human viewing the
+rendered page does not. The text directs any tool processing the document to repeat a specified
+phrase an exact number of times, and passing the document through a routine automated
+summarization step reproduced the planted phrase exactly as demanded, integrated into otherwise
+coherent prose with no indication of its origin, consistently across repeated runs. Four
+properties make the incident a compact illustration of this section's argument.
+
+\begin{enumerate}[leftmargin=*,itemsep=2pt]
+  \item \textbf{No system was compromised.} Model, host, and document transport were intact. The
+    attack consists entirely of placing text where a model will read it, which is the assumed
+    adversary capability and nothing more.
+  \item \textbf{The channel is invisible to the usual controls.} The instruction is legitimate
+    document content by every mechanical test: the file hashes identically and a signature over
+    it verifies.
+  \item \textbf{The output is misattributed.} Text produced under the injected instruction reads
+    as the analytic voice of whoever ran the tool. This is the corruption of decision integrity
+    described above, arriving through the document supply chain rather than the query.
+  \item \textbf{A shared disposition enables both failure modes.} A system trained to
+    accommodate the input in front of it has no basis for treating an instruction embedded in a
+    source as adversarial rather than authoritative. The disposition that produces agreement with
+    a user's stated belief is not identical to the one that executes a document's demand, but
+    they meet in the same unvalidated channel and defeat the same integrity assumptions.
+\end{enumerate}
+
+We do not identify the document or reproduce its payload. Such text may be placed defensively,
+by authors seeking to detect undisclosed automated review, rather than with intent to manipulate;
+the mechanism and the consequence for an automated reader are identical either way, and the class
+is independently documented: screens of preprint servers in July 2025 surfaced manuscripts
+carrying hidden instructions addressed to AI reviewers \citep{lin2025hiddenprompts}. The
+practical implication is that
+provenance and sanitization controls over material entering a model's context are a prerequisite
+for the mitigations of Section~\ref{sec:controls}, not an adjacent concern: a control that reduces
+deference to the user is of limited value if the model remains fully deferential to any text it is
+given to read. We return to this asymmetry in Section~\ref{sec:openproblems}.

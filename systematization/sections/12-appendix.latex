@@ -1,0 +1,228 @@
+%%
+%% APPENDICES (well-marked; reviewers are not obligated to read them)
+%%
+
+\section{Benchmark Comparison}
+\label{app:benchmarks}
+
+Table~\ref{tab:benchmark_comparison} compares the dedicated sycophancy benchmarks of
+Section~\ref{sec:measurement} on construct, key results, model coverage, and known limits, to
+support instrument selection for future evaluation and certification work.
+
+\begin{table*}[t]
+\centering
+\caption{Comprehensive comparison of dedicated sycophancy benchmarks.}
+\label{tab:benchmark_comparison}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{1.5cm}p{1.9cm}p{3.4cm}p{2.5cm}p{3.1cm}p{2.8cm}l@{}}
+\toprule
+\textbf{Benchmark} & \textbf{Domain, format} & \textbf{Focus and key result} & \textbf{Models} &
+\textbf{Strengths} & \textbf{Limitations} & \textbf{Ref.} \\
+\midrule
+SycEval & Math, medical QA; single-turn MCQ & False-belief agreement, progressive vs.\ regressive;
+  overall rate 58.19\%, persistence 78.5\% (95\% CI [77.2\%, 79.8\%]) &
+  ChatGPT-4o, Claude-Sonnet, Gemini-1.5-Pro &
+  Peer reviewed (AIES 2025); covers medical domain & Three models; single-turn only &
+  \cite{fanous2025syceval} \\[2pt]
+SYCON & Debate, ethics, factual; multi-turn & Stance-flip speed and frequency under sustained
+  pressure; all models eventually flip & 17 LLMs &
+  Largest multi-turn study; includes reasoning-optimized models & No visual modality; English only &
+  \cite{hong2025sycon} \\[2pt]
+ELEPHANT & Interpersonal advice; single-turn & Social sycophancy, face preservation +45 pp vs.\
+  humans; moral-conflict affirmation 48\% & 11 LLMs + live human study &
+  First social-sycophancy benchmark with human experiment; peer reviewed (ICLR 2026) &
+  Subjective ratings; advice domain only & \cite{cheng2026elephant} \\[2pt]
+PARROT & MMLU-style factual; single-turn MCQ & Authority-pressure follow rate across generations;
+  11\% (GPT-5) to 94\% (Qwen 2.5-1.5B) & 22 models &
+  Largest model coverage; reveals generational heterogeneity & Single-turn; no social-pressure
+  variant & \cite{celebi2025parrot} \\[2pt]
+PENDULUM & Visual QA, six image domains & Visual sycophancy under conflicting user suggestion &
+  Multimodal LLMs & First multimodal benchmark; about 2,000 human-curated pairs &
+  Static images only & \cite{rahman2025pendulum} \\[2pt]
+VISE & Video QA & Video-LLM alignment with misleading user input against visual evidence &
+  Video-LLMs & First video benchmark; multiple question formats & Early stage; limited model
+  coverage & \cite{zhou2025flattery} \\[2pt]
+Pressure-Tune & Scientific QA; multi-turn adversarial & Resistance to social pressure and false
+  premises; alignment strategy outweighs size & Scientific QA models &
+  Paired mitigation method & Domain-specific & \cite{zhang2025pressure} \\[2pt]
+AEDI & Mixed propositions; single-turn & Continuous epistemic-deference score; systematic
+  provider differences & 8 models, 16,000 prompts &
+  Only continuous scalar; enables longitudinal tracking & Requires domain calibration &
+  \cite{botas2026aedi} \\[2pt]
+Beacon & Mixed; single-turn & Decomposed sub-biases: position, verbosity, validation &
+  Multiple LLMs & Targeted diagnosis informs mitigation selection & Single-turn; synthetic
+  prompts & \cite{pandey2025beacon} \\[2pt]
+PsychMachine & Psychiatric; multi-turn simulation & Delusion confirmation 0.91, harm enablement
+  0.69 (0--1 scale) & 8 frontier LLMs & Only psychiatric-safety benchmark; quantifies harm
+  enablement & Simulated, not real patients & \cite{auyeung2025psychogenic} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Mitigation Comparison}
+\label{app:mitigations}
+
+Table~\ref{tab:mitigation_comparison} compares the primary mitigation methods of
+Section~\ref{sec:controls} across all four tiers. Effectiveness ratings are qualitative
+assessments based on reported experimental results; computational cost is relative to full model
+fine-tuning.
+
+\begin{table*}[t]
+\centering
+\caption{Comparison of sycophancy mitigation methods across the four control tiers.}
+\label{tab:mitigation_comparison}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{2.5cm}p{0.9cm}p{1.2cm}p{0.95cm}p{1.9cm}p{3.6cm}p{3.3cm}l@{}}
+\toprule
+\textbf{Method} & \textbf{Tier} & \textbf{Effect.} & \textbf{Cost} & \textbf{Applicability} &
+\textbf{Key mechanism} & \textbf{Trade-offs} & \textbf{Ref.} \\
+\midrule
+Synthetic anti-sycophancy data & Data & High & Low & Broad &
+  Fine-tuning on synthetic pairs where the sycophantic response is marked incorrect &
+  May degrade general performance if pairs are not domain-representative &
+  \cite{wei2023synthetic} \\[2pt]
+Supervised Pinpoint Tuning & Training & Very high & Low--med & Targeted ($<$5\% of heads) &
+  Fine-tunes only sycophancy-driving attention heads; 168M params on Llama-2-13B &
+  Requires head identification; less studied beyond Llama & \cite{chen2024pinpoint} \\[2pt]
+CAUSM & Training & High & Medium & Broad &
+  Removes spurious user-preference correlations via causal head reweighting &
+  Complex implementation; needs causal graph specification & \cite{li2025causm} \\[2pt]
+Constitutional AI & Training & Medium & High & Broad &
+  Self-critique and revision against explicit honesty principles &
+  Slow training loop; principles must be well crafted & \cite{bai2022constitutional} \\[2pt]
+DPO on contrastive pairs & Training & High & Medium & Broad &
+  Maximizes likelihood ratio of truthful over sycophantic completions without an explicit reward
+  model & Depends critically on preference-data curation quality &
+  \cite{chen2024pinpoint,wang2024synthetic} \\[2pt]
+Pressure-Tune & Training & High & Medium & Scientific QA &
+  Fine-tunes on adversarial dialogues with rationales that reject misinformation &
+  Domain-specific; generalization not demonstrated & \cite{zhang2025pressure} \\[2pt]
+SMART & Training & High & High & Reasoning models &
+  Uncertainty-aware MCTS generates truthful trajectories under pressure; RL trains on them &
+  Computationally expensive; needs reasoning-capable base & \cite{beigi2025smart} \\[2pt]
+Ask Don't Tell & Inference & Medium & None & Any deployed system &
+  Reframing user assertions as questions before answering &
+  Weaker under multi-turn pressure; user or system must adopt reframing &
+  \cite{dubois2026askdont} \\[2pt]
+Third-person perspective prompt & Inference & Medium & None & Multi-turn dialogue &
+  Neutral third-person stance instruction; up to 63.8\% reduction &
+  Degrades with conversation length & \cite{hong2025sycon} \\[2pt]
+Contrastive Activation Addition & Inference & High & Low & White-box models &
+  Steering vector from mean activation difference of sycophantic vs.\ truthful pairs &
+  Needs white-box access; per-domain calibration & \cite{panickssery2023steering} \\[2pt]
+Representation editing & Inference & High & Low--med & White-box models &
+  Optimal control over hidden-state trajectory via Bellman value function &
+  Needs white-box access and value-function training & \cite{kong2024repredit} \\[2pt]
+MONICA & Inference & High & Medium & Large reasoning models &
+  Per-step drift scores; calibrator suppresses sycophantic drift mid-inference &
+  Adds latency; validated on three models & \cite{hu2025monica} \\[2pt]
+AEDI monitoring & Policy & Ongoing & Low & Any deployed system &
+  Longitudinal deference-score tracking across model versions &
+  Periodic re-evaluation; scalar may miss multi-turn dynamics & \cite{botas2026aedi} \\[2pt]
+Adversarial robustness testing & Policy & N/A (eval) & Low & High-stakes deployments &
+  SycEval / SYCON as required model-card evaluation criteria &
+  Not a direct mitigation; needs community adoption & \cite{fanous2025syceval,hong2025sycon} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Measurement Metrics Catalog}
+\label{app:metrics}
+
+Table~\ref{tab:metrics} catalogs the primary metrics used across the evaluation literature. The
+methodological trend is multi-pronged evaluation, combining controlled false-belief injection,
+multi-turn pressure simulation, judge-based facet rating, and scalar indices, because no single
+metric captures the full behavioral range.
+
+\begin{table*}[t]
+\centering
+\caption{Measurement metrics for sycophancy quantification.}
+\label{tab:metrics}
+\small
+\begin{tabular}{@{}p{3.6cm}p{11.4cm}l@{}}
+\toprule
+\textbf{Metric} & \textbf{Definition} & \textbf{Source} \\
+\midrule
+Sycophancy rate & Share of responses agreeing with the user's (often wrong) position &
+  \cite{fanous2025syceval} \\
+Progressive rate & Share of capitulations landing on correct answers & \cite{fanous2025syceval} \\
+Regressive rate & Share of capitulations landing on incorrect answers & \cite{fanous2025syceval} \\
+Turn of Flip (ToF) & Turns until the model first changes stance under pressure &
+  \cite{hong2025sycon} \\
+Number of Flips & Stance changes across a conversation & \cite{hong2025sycon} \\
+AEDI score & Continuous sensitivity of expressed support to user attitude & \cite{botas2026aedi} \\
+Authority follow rate & Share of cases following an incorrect authority figure &
+  \cite{celebi2025parrot} \\
+Misleading resistance & Accuracy maintained under a user's false premise & \cite{zhang2025pressure} \\
+Rubric score & Judge-rated facets (agreement, flattery, validation) & \cite{dubois2026askdont} \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\section{Glossary}
+\label{app:glossary}
+
+\begin{description}[leftmargin=0pt,itemsep=2pt,parsep=0pt]
+\item[Sycophancy.] The tendency of an LLM to prioritize user approval over epistemic accuracy,
+  typically produced by preference-optimization dynamics that reward responses raters prefer in
+  the short term.
+\item[Propositional sycophancy.] Affirming or conceding to the user's expressed factual beliefs,
+  including false ones; the harm is epistemic rather than relational.
+\item[Social sycophancy.] Face-preserving behavior without necessary propositional error:
+  flattery, unsolicited praise, avoidance of corrective feedback, affirmation of self-image.
+\item[Progressive / regressive sycophancy.] Classification of capitulation by outcome: toward a
+  correct answer (possibly appropriate updating) or toward an incorrect one (unconditionally
+  harmful). Aggregate metrics that merge the two overstate harm where users are often right.
+\item[Reward hacking / specification gaming.] Maximizing a proxy reward in ways that diverge from
+  the intended objective; sycophancy games the human-approval proxy.
+\item[Proxy Compression Hypothesis.] Framework formalizing reward hacking as exploitation of the
+  information lost when high-dimensional human objectives are compressed into a scalar reward.
+\item[Reward overoptimization.] Declining true quality under increasing optimization pressure
+  against a proxy, after an initial improvement.
+\item[Warm persona effect.] Higher sycophancy in models fine-tuned for warm, empathetic personas,
+  strongest when users express distress.
+\item[Sycophantic anchors.] Sentences in a reasoning trace that causally commit the model to
+  agreement before the final answer, detectable mid-inference.
+\item[Contrastive Activation Addition.] Inference-time steering that adds a scaled direction in
+  activation space associated with a target behavior.
+\item[Citation-based sycophancy.] Disproportionate persuasion by rebuttals containing citations,
+  even fabricated ones, because citation-bearing pushback resembles expert correction.
+\item[Epistemic entrainment.] Hypothesized longitudinal erosion of a user's epistemic thresholds
+  and self-correction capacity under chronic exposure to belief-confirming AI.
+\item[Adaptive friction.] Proposed control that modulates agreement versus challenge by domain
+  risk, user expertise, and emotional state rather than applying uniform resistance.
+\end{description}
+
+\section{Open Science}
+\label{app:openscience}
+
+This SoK is a systematization of published literature and public vendor disclosures; it reports
+no new experiments and uses no human-subject or proprietary data, so every claim in the paper can
+be checked directly against the cited sources without any artifact. We nevertheless release the
+systematization itself in machine-readable form: (i) the coded source corpus (62 entries with
+construct, elicitation, modality, tier, and evidence-status fields), (ii) the benchmark comparison
+(Table~\ref{tab:benchmark_comparison}), metric catalog (Table~\ref{tab:metrics}), and mitigation
+comparison (Table~\ref{tab:mitigation_comparison}) as CSV files, (iii) the coverage-matrix coding
+with per-cell citations (Table~\ref{tab:coverage}), and (iv) a validation script that regenerates
+the CSV files and fails if they drift from the tables in this paper. Because the contribution is
+not artifact-dependent, we withhold this supplementary bundle during review to preserve author
+anonymity; it will be released in a public repository upon acceptance, and the camera-ready
+version will carry the URL. All 62 references were verified against their primary records
+(publisher pages, proceedings indexes, arXiv, or vendor sites) in August 2026.
+
+\section{Ethical Considerations}
+\label{app:ethics}
+
+This work analyzes previously published studies and involves no new data collection, no human
+subjects, and no deanonymization. Two points warrant statement. First, a threat model for eliciting
+biased model output could be read as instructional; we judge the exposure risk low because every
+elicitation effect cited is already published, because the phrasing effects involved are simple
+and widely known, and because the defender-side value of naming the channels exceeds the marginal
+information provided to adversaries. Second, the instruction-injection observation
+(Section~\ref{sec:injection}) is presented as an illustrative incident, not as evidence; it
+describes mechanism and consequences without identifying the document or reproducing the payload,
+since such text can be placed defensively by authors, and the class is independently documented
+\citep{lin2025hiddenprompts}. The proposed longitudinal study (Section~\ref{subsec:entrainment}) specifies debriefing,
+referral pathways, and independent safety monitoring as preconditions.

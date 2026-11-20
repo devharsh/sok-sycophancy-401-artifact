@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the paper."
+title: "Artifact for SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems"
+version: "1.0"
+date-released: "2026-11-20"
+repository-code: "https://github.com/devharsh/sok-sycophancy-401-artifact"
+license: MIT
+authors:
+  - family-names: Trivedi
+    given-names: Devharsh
+    orcid: "https://orcid.org/0000-0001-6374-7249"
+    affiliation: "LaGuardia Community College, City University of New York"
+preferred-citation:
+  type: conference-paper
+  title: "SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems"
+  authors:
+    - family-names: Trivedi
+      given-names: Devharsh
+      orcid: "https://orcid.org/0000-0001-6374-7249"
+      affiliation: "LaGuardia Community College, City University of New York"
+  collection-title: "Proceedings of the 22nd ACM ASIA Conference on Computer and Communications Security (ASIA CCS '27)"
+  publisher:
+    name: ACM
+  conference:
+    name: "ASIA CCS '27"
+    city: Macau
+    country: CN
+  year: 2027

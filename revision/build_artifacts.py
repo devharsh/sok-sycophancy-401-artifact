@@ -14,6 +14,7 @@ Exits non-zero on any drift. Run after ANY edit to the tables in sections/ or to
 import collections, csv, os, re, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+NON_CORPUS_KEYS = {"trivedi2026sycophancyartifact"}
 ART = os.path.join(ROOT, "artifacts")
 os.makedirs(ART, exist_ok=True)
 
@@ -287,7 +288,8 @@ def main():
 
     # 1. corpus equals the bibliography
     bib = open(os.path.join(ROOT, "references.bib")).read()
-    bibkeys = set(re.findall(r"@\w+\{([^,\s]+),", bib))
+    # The artifact's own entry is cited in the Open Science appendix but is not a corpus source.
+    bibkeys = set(re.findall(r"@\w+\{([^,\s]+),", bib)) - NON_CORPUS_KEYS
     corpuskeys = [r[0] for r in CORPUS]
     if len(set(corpuskeys)) != len(corpuskeys):
         failures.append("duplicate keys in corpus")

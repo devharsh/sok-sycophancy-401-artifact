@@ -1,12 +1,33 @@
-# Anonymous artifact for ASIACCS 2027 submission #401
+# Artifact: SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems
 
-SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems
+Devharsh Trivedi, LaGuardia Community College, City University of New York.
 
-This repository accompanies the author response and the revision that implements it. It has three
-parts. The validators and the count script run with Python 3 and the standard library only;
-regenerating the figures also needs matplotlib (Figures 1 to 3) or Node.js (Figure 4).
+Artifact for the paper accepted at the 22nd ACM ASIA Conference on Computer and Communications
+Security (ASIA CCS 2027, Macau, July 12 to 16, 2027). Release v1.0 matches the accepted version.
+During review the same repository was shared anonymously; this is its public release.
 
-## systematization/ (as submitted)
+## Citation
+
+```bibtex
+@inproceedings{trivedi2027sycophancy,
+  author    = {Devharsh Trivedi},
+  title     = {{SoK}: Sycophancy as an Integrity Failure in Human-{AI} Decision Systems},
+  booktitle = {Proceedings of the 22nd ACM ASIA Conference on Computer and Communications Security
+               (ASIA CCS '27)},
+  publisher = {ACM},
+  address   = {Macau, China},
+  year      = {2027},
+  note      = {To appear}
+}
+```
+
+## Contents
+
+The repository has three parts. The validators and the count script run with Python 3 and the
+standard library only; regenerating the figures also needs matplotlib (Figures 1 to 3) or Node.js
+(Figure 4).
+
+## systematization/ (as submitted for review)
 
 The machine-readable systematization described in the submitted paper's Open Science appendix,
 unchanged from the submitted version:
@@ -41,13 +62,16 @@ all 21 mitigations to Table 6.
 
 Run: `python3 search/reproduce_counts.py` (recomputes every count quoted in the response).
 
-## revision/ (revised manuscript)
+## revision/ (accepted version)
 
-The manuscript revised as promised in the response.
+The accepted manuscript: the revision promised in the author response, with the author block
+restored and the Open Science appendix pointing to this repository.
 
-- `paper.pdf`: the revised paper; `diff_vs_submitted.pdf`: the changes marked against the
-  submitted version.
-- `paper.latex`, `sections/`, `references.bib`: its anonymized source (128 references).
+- `paper.pdf`: the accepted paper (author version); `diff_vs_submitted.pdf`: the changes marked
+  against the submitted version.
+- `paper.latex`, `sections/`, `references.bib`: its source (128 corpus references plus the entry
+  for this repository). Build with `pdflatex paper.latex; bibtex paper; pdflatex paper.latex;
+  pdflatex paper.latex` using acmart v2.19 or later.
 - `artifacts/`: the updated systematization (128 coded sources, 44 instruments by reference type,
   38 mitigation rows of which 36 are graded and 2 are policy controls, 9 metrics, 7 coverage
   rows), defined in `artifacts/schema.md`.
@@ -56,3 +80,14 @@ The manuscript revised as promised in the response.
   Figure 4, rendered by `tools/render_drawio.js` (Node.js with Playwright and mxgraph 4.2.2).
 
 Run: `python3 revision/build_artifacts.py`
+
+## License
+
+- Code (`*.py`, `figures.ipynb`, `tools/`): MIT License, see `LICENSE`.
+- Data and coding (CSV, JSONL and the protocol documents): Creative Commons Attribution 4.0
+  International (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/. The DataCite records are
+  metadata that DataCite distributes under CC0; quotations from cited papers remain with their
+  authors.
+- The paper (`paper.pdf`, `diff_vs_submitted.pdf` and the LaTeX sources in `revision/` and
+  `systematization/`) is copyright the author and is not covered by these licenses. The version of
+  record will appear in the ASIA CCS 2027 proceedings from ACM.

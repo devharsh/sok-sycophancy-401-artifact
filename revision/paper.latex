@@ -1,18 +1,25 @@
 %% SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems
-%% ASIACCS 2027 Cycle 1 submission. ACM sigconf, double-blind (anonymous), review mode.
+%% Accepted version (named) of ASIA CCS 2027 paper 401, from the post-rebuttal revision of Oct 29, 2026.
+%% Changes from the review version: review and anonymous options dropped, author block restored
+%% (LaGuardia Community College, CUNY), accepted note added, placeholder ACM rights block suppressed,
+%% Open Science appendix points to the public artifact (Nov 2026).
+%% For the TAPS camera ready: when the ACM rights email arrives, replace \setcopyright{none},
+%% \acmDOI{} and \acmISBN{} with the values it gives, and delete the \titlenote, the
+%% printacmref=false setting and the \renewcommand line below.
 %% Compile: pdflatex paper.latex ; bibtex paper ; pdflatex ; pdflatex
-\documentclass[sigconf,review,anonymous]{acmart}
+\documentclass[sigconf]{acmart}
 
 %% ---- Rights management block. Standard submission placeholders; CCS concepts, keywords,
 %% and rights information are retained per the CFP. The anonymous option hides authors.
 \copyrightyear{2027}
 \acmYear{2027}
-\setcopyright{acmlicensed}
+\setcopyright{none}
 \acmConference[ASIA CCS '27]{ACM ASIA Conference on Computer and Communications Security}{July 12--16, 2027}{Macau, China}
 \acmBooktitle{ACM ASIA Conference on Computer and Communications Security (ASIA CCS '27), July 12--16, 2027, Macau, China}
-\acmDOI{10.1145/nnnnnnn.nnnnnnn}
-\acmISBN{978-1-4503-XXXX-X/2027/07}
-\settopmatter{printfolios=true}
+\acmDOI{}
+\acmISBN{}
+\settopmatter{printacmref=false,printfolios=true}
+\renewcommand\footnotetextcopyrightpermission[1]{}
 
 %% ---- Additional packages (acmart already loads amsmath, booktabs, hyperref, xcolor) ----
 \usepackage{enumitem}
@@ -33,13 +40,18 @@
 \begin{document}
 
 \title{SoK: Sycophancy as an Integrity Failure in Human-AI Decision Systems}
+\titlenote{Author version of a paper accepted at the 22nd ACM ASIA Conference on Computer and Communications Security (ASIA CCS 2027). To appear in the proceedings.}
 
-%% Anonymized author block for double-blind review.
-\author{Anonymous Author(s)}
+\author{Devharsh Trivedi}
+\orcid{0000-0001-6374-7249}
 \affiliation{%
-  \institution{Submission to ACM ASIACCS 2027}
-  \country{}
+  \department{Mathematics, Engineering and Computer Science}
+  \institution{LaGuardia Community College, City University of New York}
+  \city{Long Island City}
+  \state{New York}
+  \country{USA}
 }
+\email{devharsh.trivedi86@lagcc.cuny.edu}
 
 \begin{abstract}
 Sycophancy is the tendency of a large language model to favor a user's stated belief over the

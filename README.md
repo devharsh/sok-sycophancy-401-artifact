@@ -3,7 +3,7 @@
 Devharsh Trivedi, LaGuardia Community College, City University of New York.
 
 Artifact for the paper accepted at the 22nd ACM ASIA Conference on Computer and Communications
-Security (ASIA CCS 2027, Macau, July 12 to 16, 2027). Release v1.1 matches the camera-ready version.
+Security (ASIA CCS 2027, Macau, July 12 to 16, 2027). Release v1.2 matches the camera-ready version.
 During review the same repository was shared anonymously; this is its public release.
 
 ## Citation

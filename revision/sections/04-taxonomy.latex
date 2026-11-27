@@ -7,7 +7,7 @@
 Definitional clarity is a prerequisite for cumulative research and for any control that must state
 what it protects against: studies using incompatible categories cannot be compared, and a
 mitigation validated against one behavior may not generalize to another. This section summarizes,
-as background, the two-axis taxonomy of \citet{ye2026taxonomy}, which we adopt
+as background, the two-axis taxonomy of \citet{ye2026taxonomy}, which we adopt under our own labels
 (Figure~\ref{fig:taxonomy}, Table~\ref{tab:taxonomy}); what we add is the measurement-level
 qualification at the end of this section and the reference types of
 Section~\ref{subsec:reftypes}.
@@ -15,8 +15,9 @@ Section~\ref{subsec:reftypes}.
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{fig_taxonomy.pdf}
-\caption{Taxonomy of sycophantic behavior after \citet{ye2026taxonomy}: target (propositional
-versus social) and directness (overt versus covert). The progressive/regressive outcome
+\caption{Taxonomy used in this SoK, adapted from \citet{ye2026taxonomy}, whose referent and
+explicitness axes appear here as target and directness; the social branch follows
+\citet{cheng2026elephant}. The progressive/regressive outcome
 distinction applies within propositional sycophancy and is defined only for correctness-referenced
 instruments (Section~\ref{subsec:reftypes}).}
 \label{fig:taxonomy}
@@ -54,11 +55,13 @@ Subtle / implicit & Selective framing, omission of contrary evidence, or deferen
 \end{table}
 
 The most systematic organization to date is the two-axis framework \citet{ye2026taxonomy} derive
-from their 70-paper review. The first axis is \emph{target}: whether sycophancy is directed at the
-user's positions and beliefs (propositional or epistemic sycophancy) or at the user's broader
-traits and emotions (social sycophancy). The second is \emph{directness}: whether the behavior is
-explicit, such as outright agreement with a false claim, or implicit and subtle, such as selective
-framing, omission of contrary evidence, or deferential tone. The covert half of this axis is only
+from their 70-paper review. Their \emph{referent} axis asks whether the model responds to the
+user's expressed positions, verifiable or subjective, or to the user as a person, through traits or
+emotions; we call these propositional and social sycophancy and the axis \emph{target}, although
+they place part of social sycophancy as \citet{cheng2026elephant} define it under subjective
+positions. Their \emph{explicitness} axis, our \emph{directness}, separates overt behavior, such as
+outright agreement with a false claim, from implicit behavior through framing, omission, or tone.
+The covert half of this axis is only
 beginning to be measured, by instruments for implicit sycophancy in mental-health
 dialogue~\citep{han2026implicit} and for split beliefs in vision-language
 models~\citep{hong2026visual}.

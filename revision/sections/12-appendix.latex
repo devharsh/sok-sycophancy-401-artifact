@@ -262,7 +262,7 @@ Rubric score & Judge-rated facets (agreement, flattery, validation) & \cite{dubo
 \label{app:openscience}
 
 All artifacts are publicly available on GitHub~\citep{trivedi2026sycophancyartifact}, at
-\url{https://github.com/devharsh/sok-sycophancy-401-artifact}; release v1.1 matches this paper.
+\url{https://github.com/devharsh/sok-sycophancy-401-artifact}; release v1.2 matches this paper.
 The repository contains (i) the search: the 523 frozen DataCite records, all
 423 screening decisions with their quotes, the coding of the 44 instruments, the mitigation
 grades with full-text evidence, and a script that recomputes every count in this paper;
